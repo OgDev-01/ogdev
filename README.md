@@ -1,10 +1,10 @@
 <div align="center">
   <br>
   <img alt="Open Sauced" src="/public/logo.png" width="300px">
-  <h1>🍕 ogdev.vercel.app 🍕</h1>
+  <h1>🔥 ogdev.vercel.app 🔥</h1>
   <strong>My personal portfolio v2</strong>
 </div>
-<br>****
+<br>
 
 ## 🖼️ Project Figma
 
