@@ -58,7 +58,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <h2 className="font-chivo">
+                    <h2 className="font-chivo text-red-300">
                         Dcs <span>-&gt;</span>
                     </h2>
                     <p className={inter.className}>
