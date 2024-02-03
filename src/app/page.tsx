@@ -1,10 +1,9 @@
-import Image from "next/image";
-import LightWave from "public/light-wave.svg";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <main className="w-full flex items-end min-h-screen">
-      {/* <Image src={LightWave} alt="Light Wave" /> */}
+      <UserButton afterSignOutUrl="/" />
       <svg
         width="1512"
         height="801"
