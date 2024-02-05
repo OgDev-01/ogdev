@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { SyncUser } from "@/libs/db";
 
 async function handler(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SIGNING_SECRET;
@@ -47,12 +48,26 @@ async function handler(req: Request) {
     });
   }
 
-  // Get the ID and type
-  const { id } = evt.data;
+  // Get the type of event
   const eventType = evt.type;
 
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+  if (eventType === "user.created" || eventType === "user.updated") {
+    const { id, first_name, last_name, image_url, email_addresses } = evt.data;
+
+    try {
+      await SyncUser({
+        external_id: id,
+        name: `${first_name} ${last_name}`,
+        email: email_addresses[0].email_address,
+        avatar_url: image_url,
+      });
+    } catch (err) {
+      console.error("Error syncing user:", err);
+      return new Response("Error occured", {
+        status: 400,
+      });
+    }
+  }
 
   return new Response("", { status: 200 });
 }

@@ -1,6 +1,11 @@
+import { HelloWorld } from "@/libs/db";
 import { UserButton } from "@clerk/nextjs";
 
-export default function Home() {
+const getData = async () => {};
+
+export default async function Home() {
+  const data = await HelloWorld();
+  console.log(data);
   return (
     <main className="w-full flex items-end min-h-screen">
       <UserButton afterSignOutUrl="/" />
@@ -10,7 +15,7 @@ export default function Home() {
         viewBox="0 0 1512 801"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        // make it responsive
+        // to make it responsive and scale according to viewport
         preserveAspectRatio="none"
         className="w-full h-auto"
       >
@@ -22,3 +27,5 @@ export default function Home() {
     </main>
   );
 }
+
+export const runtime = "edge";
