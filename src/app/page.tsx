@@ -5,7 +5,7 @@ const getData = async () => {};
 
 export default async function Home() {
   const data = await HelloWorld();
-
+  console.log(data);
   return (
     <main className="w-full flex items-end min-h-screen">
       <UserButton afterSignOutUrl="/" />
@@ -28,4 +28,4 @@ export default async function Home() {
   );
 }
 
-// export const runtime = "edge";
+export const runtime = "edge";
