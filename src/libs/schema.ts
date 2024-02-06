@@ -27,4 +27,18 @@ export const projects = pgTable("project", {
   deleted_at: timestamp("deleted_at"),
 });
 
+export const codeSnipets = pgTable("code_snipet", {
+  id: serial("id").primaryKey().notNull(),
+  user_id: serial("user_id")
+    .references(() => users.id)
+    .notNull(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  code: text("code").notNull(),
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").notNull().defaultNow(),
+  deleted_at: timestamp("deleted_at"),
+});
+
 export type InsertUser = InferInsertModel<typeof users>;

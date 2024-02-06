@@ -3,8 +3,17 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
 const { users } = schema;
-const dbConnectionString = process.env.NEON_DB_CONNECTION_STRING || ""; // Ensure the environment variable is defined
+
 neonConfig.fetchConnectionCache = true; // Enable the connection cache
+
+// Workaround until Neon Vercel integration adds this query parameter
+if (!process.env.NEON_DB_CONNECTION_STRING) {
+  throw new Error("process.env.DATABASE_URL was missing");
+}
+const url = new URL(process.env.NEON_DB_CONNECTION_STRING);
+url.searchParams.set("sslmode", "require");
+
+const dbConnectionString = url.toString(); // Ensure the environment variable is defined
 const sql = neon(dbConnectionString);
 
 export const db = drizzle(sql, { schema });
@@ -39,31 +48,3 @@ export const SyncUser = async (userInfo: schema.InsertUser) => {
 };
 
 // Blog Posts
-
-export const HelloWorld = async () => {
-  const response = await sql`SELECT NOW()`;
-  return response;
-};
-
-async function configureDB() {
-  const dbResponse = await sql`
-  CREATE TABLE IF NOT EXISTS "project" (
-    "id" serial PRIMARY KEY NOT NULL,
-    "user_id" serial NOT NULL,
-    "title" text NOT NULL,
-    "slug" text NOT NULL,
-    "description" text,
-    "cover_image" text NOT NULL,
-    "content" text NOT NULL,
-    "created_at" timestamp DEFAULT now() NOT NULL,
-    "updated_at" timestamp DEFAULT now() NOT NULL,
-    "deleted_at" timestamp,
-    CONSTRAINT "project_slug_unique" UNIQUE("slug")
-  );
-  `;
-  console.log("User table created:", dbResponse);
-}
-
-configureDB().catch((err) => {
-  console.error("Error configuring database", err);
-});
