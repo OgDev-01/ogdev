@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img alt="Og Dev" src="/public/logo.svg" width="300px">
+  <img alt="Og Dev" src="./public/logo.png" width="300px">
   <h1>🔥 ogdev.vercel.app 🔥</h1>
   <strong>My personal portfolio v2</strong>
 </div>
@@ -9,13 +9,6 @@
 ## 🖼️ Project Figma
 
 The figma for this project can be found [here](https://www.figma.com/file/1vn9HwlgilaJdDRTQrFUku/OG_dev_portfolio?node-id=194%3A6923&t=Ia8Cw6pA4csnoMN1-1)
-
-## 🔬 Atomic Design
-
-This project uses Atomic Design for it's Components. Here are several resources for Atomic Design if you are unfamiliar:
-
--   [Atomic Design by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
--   [Atomic Design - How To Make Web and UI Design Easier](https://www.youtube.com/watch?v=W3A33dmp17E)
 
 ## 📙 Storybook
 
