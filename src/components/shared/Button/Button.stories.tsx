@@ -4,7 +4,7 @@ import { Meta, StoryObj } from "@storybook/react";
 type StoryMeta = Meta<typeof Button>;
 
 const meta: StoryMeta = {
-  title: "Button",
+  title: "Design System/Button",
   component: Button,
 };
 
