@@ -1,10 +1,8 @@
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
 
 export default async function Home() {
   return (
     <main className="w-full flex items-end min-h-screen">
-      <UserButton afterSignOutUrl="/" />
       <svg
         width="1512"
         height="801"
