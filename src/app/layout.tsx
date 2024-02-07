@@ -1,9 +1,14 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
-import type { Metadata } from "next";
-import "./globals.css";
+import { Chivo_Mono } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/libs/utils";
+import AppNav from "@/components/shared/AppNav/AppNav";
+import type { Metadata } from "next";
+
+import "./globals.css";
+import Provider from "./theme-provider";
+
+const chivoMono = Chivo_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +22,23 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            chivoMono.className,
+            "bg-primary-white dark:bg-secondary-black text-secondary-black dark:text-primary-white transition-colors duration-200 ease-in-out"
+          )}
+        >
+          <Provider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AppNav />
+            <main>{children}</main>
+          </Provider>
+        </body>
       </html>
     </ClerkProvider>
   );
