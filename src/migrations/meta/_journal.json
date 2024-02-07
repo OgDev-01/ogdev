@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1706999492709,
+      "tag": "0000_lying_the_executioner",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707097788558,
+      "tag": "0001_great_nekra",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707244478991,
+      "tag": "0002_needy_maverick",
+      "breakpoints": true
+    }
+  ]
+}
