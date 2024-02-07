@@ -32,6 +32,21 @@ To start a local copy of the app on port `3000`:
 npm run dev
 ```
 
+### DB Migrations
+
+To run migrations:
+```bash
+npm run migrations
+```
+To apply migrations to Neon Serverless Db
+
+```bash
+npm run apply-migrations
+```
+
+
+
+
 ### 🚀 Production deployment
 
 A production deployment is a complete build of the project, including the build of the static assets.
