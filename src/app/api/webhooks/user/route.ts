@@ -42,6 +42,7 @@ async function handler(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Error verifying webhook:", err);
     return new Response("Error occured", {
       status: 400,
@@ -62,6 +63,7 @@ async function handler(req: Request) {
         avatar_url: image_url,
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Error syncing user:", err);
       return new Response("Error occured", {
         status: 400,
