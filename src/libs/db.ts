@@ -44,6 +44,7 @@ export const SyncUser = async (userInfo: schema.InsertUser) => {
       },
     });
 
+  // eslint-disable-next-line no-console
   console.log("SyncUser result:", result);
 };
 
