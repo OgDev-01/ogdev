@@ -1,14 +1,8 @@
-import { HelloWorld } from "@/libs/db";
-import { UserButton } from "@clerk/nextjs";
-
-const getData = async () => {};
+import React from "react";
 
 export default async function Home() {
-  const data = await HelloWorld();
-  console.log(data);
   return (
     <main className="w-full flex items-end min-h-screen">
-      <UserButton afterSignOutUrl="/" />
       <svg
         width="1512"
         height="801"

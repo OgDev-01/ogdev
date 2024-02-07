@@ -9,12 +9,14 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "migrations": "npx drizzle-kit generate:pg"
+    "migrations": "drizzle-kit generate:pg",
+    "apply-migrations": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.5",
     "@neondatabase/serverless": "^0.7.2",
     "clsx": "^2.1.0",
+    "dotenv": "^16.4.1",
     "drizzle-orm": "^0.29.3",
     "next": "14.1.0",
     "react": "^18",
