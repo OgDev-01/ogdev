@@ -1,10 +1,12 @@
 "use client";
 import { useTheme } from "next-themes";
+import ClientOnly from "../ClientOnly/ClientOnly";
 
 const AppLogo = () => {
   const { theme } = useTheme();
   return (
-    <>
+    <ClientOnly>
+      {/* Mobile version */}
       <svg
         width="114"
         height="19"
@@ -18,6 +20,8 @@ const AppLogo = () => {
           fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
       </svg>
+
+      {/* Desktop version */}
       <svg
         width="227"
         height="38"
@@ -31,7 +35,7 @@ const AppLogo = () => {
           fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
       </svg>
-    </>
+    </ClientOnly>
   );
 };
 
