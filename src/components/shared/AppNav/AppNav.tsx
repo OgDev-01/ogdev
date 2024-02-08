@@ -76,7 +76,7 @@ const HamburguerMenu = () => {
           width="30"
           height="4"
           rx="2"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
         <rect
           x="10"
@@ -84,7 +84,7 @@ const HamburguerMenu = () => {
           width="20"
           height="4"
           rx="2"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
         <rect
           x="20"
@@ -92,7 +92,7 @@ const HamburguerMenu = () => {
           width="10"
           height="4"
           rx="2"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
       </svg>
 
@@ -109,7 +109,7 @@ const HamburguerMenu = () => {
           width="60"
           height="8"
           rx="4"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
         <rect
           x="20"
@@ -117,7 +117,7 @@ const HamburguerMenu = () => {
           width="40"
           height="8"
           rx="4"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
         <rect
           x="40"
@@ -125,7 +125,7 @@ const HamburguerMenu = () => {
           width="20"
           height="8"
           rx="4"
-          fill={theme === "light" ? "#0A0A0A" : "#FEFEFE"}
+          fill={theme === "dark" ? "#FEFEFE" : "#0A0A0A"}
         />
       </svg>
     </button>
