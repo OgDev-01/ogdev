@@ -54,7 +54,7 @@ const AppNav = () => {
         </nav>
         <DropdownMenuPrimitive.Portal>
           <DropdownMenuPrimitive.Content
-            className="bg-primary-white/30 dark:bg-secondary-black/30 z-50 w-[100vw] md:w-[35vw] backdrop-blur-lg min-h-[calc(100vh)] py-6"
+            className="bg-primary-white/30 dark:bg-secondary-black/30 z-50 w-[100vw] md:w-[35vw] backdrop-blur-lg min-h-[calc(100vh)] py-14"
             sideOffset={-55}
             align="end"
           >
