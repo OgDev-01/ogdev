@@ -38,7 +38,6 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppNav />
-            <Footer />
             <main>{children}</main>
             <Footer />
           </Provider>
