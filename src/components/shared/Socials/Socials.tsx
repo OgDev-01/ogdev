@@ -1,8 +1,8 @@
-import React from "react";
 import { FaGithub, FaYoutube, FaLinkedinIn } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 
 type IconType = React.ElementType;
+
 const Socials = () => {
   const socials = [
     {

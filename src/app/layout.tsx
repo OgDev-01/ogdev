@@ -3,9 +3,11 @@ import { Chivo_Mono } from "next/font/google";
 
 import { cn } from "@/libs/utils";
 import AppNav from "@/components/shared/AppNav/AppNav";
-import type { Metadata } from "next";
+import Footer from "@/components/shared/Footer/Footer";
 
 import "./globals.css";
+import type { Metadata } from "next";
+
 import Provider from "./theme-provider";
 
 const chivoMono = Chivo_Mono({ subsets: ["latin"] });
@@ -36,6 +38,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppNav />
+            <Footer />
             <main>{children}</main>
           </Provider>
         </body>
