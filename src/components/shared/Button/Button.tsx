@@ -11,7 +11,7 @@ const buttonVariants = cva(
         outlined:
           "bg-transparent h-10 py-2 px-7 font-chivo border rounded-3xl border-secondary-button text-secondary-button hover:bg-secondary-button hover:text-white  dark:border-slate-700 dark:text-slate-100",
         filled:
-          "bg-secondary-button border border-secondary-button  h-10 py-2 px-7 rounded-3xl text-white hover:bg-transparent hover:text-secondary-button dark:bg-slate-700 dark:text-slate-100",
+          "bg-secondary-button border border-secondary-button  h-10 py-2 px-8 rounded-3xl text-white hover:bg-transparent hover:text-secondary-button",
       },
     },
     defaultVariants: {
@@ -31,7 +31,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       case true:
         return (
           <button
-            className={cn(buttonVariants({ variant, className }))}
+            className={cn(buttonVariants({ variant, className }), className)}
             ref={ref}
             {...props}
           />

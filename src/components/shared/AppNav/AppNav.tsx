@@ -16,7 +16,7 @@ import ClientOnly from "../ClientOnly/ClientOnly";
 import Button from "../Button/Button";
 import Socials from "../Socials/Socials";
 
-const NavLinks = [
+export const NavLinks = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
