@@ -28,7 +28,7 @@ export default function RootLayout({
         <body
           className={cn(
             chivoMono.className,
-            "bg-primary-white dark:bg-secondary-black text-secondary-black dark:text-primary-white transition-colors duration-200 ease-in-out"
+            "bg-primary-white dark:bg-secondary-black text-secondary-black dark:text-primary-white transition-colors duration-200 ease-in-out overflow-x-hidden"
           )}
         >
           <Provider
@@ -38,8 +38,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppNav />
-            <Footer />
             <main>{children}</main>
+            <Footer />
           </Provider>
         </body>
       </html>
