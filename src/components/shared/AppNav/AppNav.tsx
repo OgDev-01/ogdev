@@ -2,12 +2,14 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 
 import { BiMoon } from "react-icons/bi";
 import { LuSunDim } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 import { useTheme } from "next-themes";
 import { cn } from "@/libs/utils";
@@ -19,16 +21,21 @@ import Socials from "../Socials/Socials";
 export const NavLinks = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "/about#contact" },
   { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Blogs", href: "/blogs" },
   { label: "Snippets", href: "/snippets" },
 ];
 
 const AppNav = () => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const handleToggleDropdown = (value: boolean) => {
     setIsOpen(value);
+  };
+
+  const getActiveClass = (href: string) => {
+    return pathname === href ? "opacity-70" : "";
   };
   return (
     <header>
@@ -44,9 +51,26 @@ const AppNav = () => {
             <AppLogo />
           </Link>
 
-          <div className="flex items-center gap-4 md:gap-10">
-            <ThemeSwitcher />
+          <div>
+            <ul className="hidden md:flex gap-8 items-center">
+              {NavLinks.map(({ label, href }, i) => (
+                <li
+                  className={cn(
+                    pathname === href ? "border-b border-black/40" : ""
+                  )}
+                  key={i}
+                >
+                  <Link className={cn(getActiveClass(href))} href={href}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+              <ThemeSwitcher />
+              <UserButton />
+            </ul>
+          </div>
 
+          <div className="flex md:hidden items-center gap-4 md:gap-10">
             <DropdownMenuPrimitive.Trigger className="focus-visible:outline-none">
               <HamburguerMenu />
             </DropdownMenuPrimitive.Trigger>
@@ -126,7 +150,11 @@ const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
 const HamburguerMenu = () => {
   const { theme } = useTheme();
   return (
-    <button className="flex items-center font-bold gap-3">
+    <button
+      aria-label="Toggle theme"
+      title="Toggle theme"
+      className="flex items-center font-bold gap-3"
+    >
       <span className="text-base md:text-xl max-md:hidden">Menu</span>
       {/* Mobile version */}
       <ClientOnly>

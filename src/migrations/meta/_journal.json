@@ -22,6 +22,27 @@
       "when": 1707244478991,
       "tag": "0002_needy_maverick",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707573085336,
+      "tag": "0003_worried_donald_blake",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1707915244369,
+      "tag": "0004_lovely_sue_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1707915501757,
+      "tag": "0005_skinny_dark_beast",
+      "breakpoints": true
     }
   ]
 }
