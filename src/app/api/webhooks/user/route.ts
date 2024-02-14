@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { SyncUser } from "@/backend/config/db";
+import { SyncUser } from "@/backend/model/users";
 
 async function handler(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SIGNING_SECRET;

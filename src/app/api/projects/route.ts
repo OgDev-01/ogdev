@@ -8,7 +8,9 @@ const router = createEdgeRouter<NextRequest, NextResponse>();
 
 router.use((req, res, next) => AuthGuard(req, next));
 
-router.post(createProject);
+router.post((req, res, next) => {
+  return createProject(req);
+});
 
 export async function POST(req: NextRequest, res: NextResponse) {
   return router.run(req, res);
