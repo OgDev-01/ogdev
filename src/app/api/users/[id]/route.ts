@@ -1,6 +1,6 @@
 import { createEdgeRouter } from "next-connect";
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { getUserById, updateUserPartial } from "@/backend/model/users";
 import AuthGuard from "@/backend/middlesware/auth-guard";
@@ -27,14 +27,14 @@ router.patch(async (request, { params }) => {
 
 // Delete user
 
-router.delete(async () => {
-  return "hello";
-});
+// router.delete(async () => {
+//   return "hello";
+// });
 
 export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<NextResponse>;
 }
 
 export async function PATCH(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<NextResponse>;
 }

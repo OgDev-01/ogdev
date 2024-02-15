@@ -17,7 +17,7 @@ export async function getAllProjects() {
   return NextResponse.json(blogArray, { status: 200 });
 }
 
-export async function createProject(req: NextRequest) {
+export async function createProject(req: NextRequest, res: NextResponse) {
   const formData = await req.formData();
   const data = Object.fromEntries(formData);
 
@@ -36,7 +36,7 @@ export async function createProject(req: NextRequest) {
   // eslint-disable-next-line no-console
   console.log(remoteImageObj, slug);
 
-  return NextResponse.json("Hello", { status: 201 });
+  return NextResponse.json({ message: "Project created" }, { status: 201 });
 }
 
 export async function getProjectById({ params }: { params: { id: string } }) {

@@ -24,7 +24,7 @@ async function AuthGuard(req: NextRequest, next: NextHandler) {
       jwt.verify(sessionToken, publicKey);
     }
 
-    return next();
+    await next();
   } catch (error) {
     return NextResponse.json(
       { error: "Unauthorized", message: "Invalid or expired token" },
