@@ -6,6 +6,7 @@ import AppNav from "@/components/shared/AppNav/AppNav";
 import Footer from "@/components/shared/Footer/Footer";
 
 import "./globals.css";
+import "@mdxeditor/editor/style.css";
 import type { Metadata } from "next";
 
 import Provider from "./theme-provider";
