@@ -25,12 +25,6 @@ router.patch(async (request, { params }) => {
   return updateUserPartial(request, { params });
 });
 
-// Delete user
-
-// router.delete(async () => {
-//   return "hello";
-// });
-
 export async function GET(request: NextRequest, ctx: RequestContext) {
   return router.run(request, ctx) as Promise<NextResponse>;
 }

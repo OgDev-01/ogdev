@@ -71,6 +71,7 @@ const AppNav = () => {
           </div>
 
           <div className="flex md:hidden items-center gap-4 md:gap-10">
+            <ThemeSwitcher />
             <DropdownMenuPrimitive.Trigger className="focus-visible:outline-none">
               <HamburguerMenu />
             </DropdownMenuPrimitive.Trigger>
