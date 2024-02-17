@@ -84,7 +84,14 @@ export default function InitializedMDXEditor({
           },
         }),
         toolbarPlugin({
-          toolbarContents: () => <KitchenSinkToolbar />,
+          toolbarContents: () => (
+            <>
+              <KitchenSinkToolbar />
+              <button className="bg-secondary-black dark:bg-white dark:text-secondary-black text-white px-4 py-1.5 rounded-xl ">
+                Publish
+              </button>
+            </>
+          ),
         }),
         diffSourcePlugin({
           diffMarkdown: "",
