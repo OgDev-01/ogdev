@@ -19,6 +19,10 @@ export const validateProject = (project: any) => {
     );
   }
 
+  if (!project.tags) {
+    return NextResponse.json({ message: "Tags are required" }, { status: 400 });
+  }
+
   if (!project.content) {
     return NextResponse.json(
       { message: "Content is required" },
