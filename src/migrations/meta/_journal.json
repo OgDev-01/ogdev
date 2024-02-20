@@ -43,6 +43,20 @@
       "when": 1707915501757,
       "tag": "0005_skinny_dark_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1708301523486,
+      "tag": "0006_worthless_the_hood",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1708301615631,
+      "tag": "0007_funny_karnak",
+      "breakpoints": true
     }
   ]
 }

@@ -7,19 +7,22 @@ import { FileUploader } from "react-drag-drop-files";
 import { ForwardRefEditor } from "@/components/MdxEditor/ForwardRefEditor";
 
 import "react-toastify/dist/ReactToastify.css";
+import SeperatorInput from "@/components/shared/Input/SeperatorInput";
+import { cn } from "@/libs/utils";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 const Form = () => {
   const [markdown, setMarkdown] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [previewImg, setPreviewImg] = useState<string | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
   const handleChange = (file: File) => {
     const image = URL.createObjectURL(file);
     setPreviewImg(image);
     setFile(file);
   };
   const [showDescription, setShowDescription] = useState(false);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!event.currentTarget.title) {
@@ -34,11 +37,29 @@ const Form = () => {
     }
 
     const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+
+    formData.append("content", markdown);
+
+    formData.delete("tags");
+
+    formData.append("tags", JSON.stringify(tags));
+
+    try {
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        body: formData,
+      });
+
+      // console.log(res);
+    } catch (error) {
+      // console.error(error);
+      toast.error("Something went wrong");
+    }
   };
+
   return (
     <form onSubmit={handleSubmit} className="">
-      <div className="px-1 flex flex-col gap-6 mb-4">
+      <div className="px-1 flex flex-col gap-4 md:gap-6 mb-4">
         <input
           className="text-4xl h-14 focus:outline-none"
           placeholder="Add Title..."
@@ -46,52 +67,93 @@ const Form = () => {
           name="title"
         />
 
-        {showDescription ? (
-          <input
-            className="text-xl h-10 focus:outline-none"
-            type="text"
-            name="description"
-          />
-        ) : (
-          <button
-            className="w-max px-4 py-1.5 flex items-center gap-2 bg-secondary-black text-white rounded-lg"
-            onClick={() => setShowDescription(true)}
-          >
-            <PiTextTBold className="text-xl" /> Add Subtitle
-          </button>
-        )}
-
-        <FileUploader
-          handleChange={handleChange}
-          name="cover_image"
-          types={fileTypes}
-          value={file}
-          label="Drag & Drop or Click to Upload"
-          classes="border border-dashed !border-secondary-black/50 h-auto rounded-lg flex flex-col items-center justify-center"
-        >
-          {previewImg ? (
-            <img src={previewImg} alt="preview" className="object-contain" />
-          ) : (
-            <div className="flex flex-col opacity-40 items-center py-20">
-              <IoImageOutline className="text-6xl md:text-8xl" />
-              <p className="text-lg md:text-xl text-center">
-                Drag & Drop or Click to Upload
-              </p>
-            </div>
+        <div
+          className={cn(
+            "flex flex-col gap-4 md:gap-6",
+            previewImg || showDescription ? "flex-col" : "md:flex-row"
           )}
-
-          {previewImg && (
+        >
+          {showDescription ? (
+            <input
+              className="text-xl h-10 focus:outline-none"
+              type="text"
+              name="subtitle"
+              placeholder="Add Subtitle..."
+            />
+          ) : (
             <button
-              onClick={() => {
-                setPreviewImg(null);
-                setFile(null);
-              }}
-              className="px-2 py-1.5 mx-auto w-max rounded-md"
+              className="w-max px-4 py-2 flex items-center gap-2 bg-secondary-black text-white rounded-lg h-max"
+              onClick={() => setShowDescription(true)}
             >
-              clear image
+              <PiTextTBold className="text-xl" /> Add Subtitle
             </button>
           )}
-        </FileUploader>
+          <div className="flex gap-6 md:gap-16 items-center flex-col md:flex-row">
+            {/* This is a preview box */}
+            {previewImg && (
+              <div className="max-w-96">
+                <picture>
+                  <img
+                    className="rounded-lg"
+                    // keep the image aspect ratio
+                    style={{ objectFit: "cover" }}
+                    src={previewImg}
+                    alt="preview"
+                  />
+                </picture>
+              </div>
+            )}
+
+            <div className="flex gap-6 max-md:self-start">
+              <FileUploader
+                handleChange={handleChange}
+                name="cover_image"
+                types={fileTypes}
+                value={file}
+                label="Drag & Drop or Click to Upload"
+                classes="bg-secondary-black text-white h-auto w-max rounded-lg flex flex-col items-center justify-center h-max"
+              >
+                <button className="px-4 py-2 flex items-center gap-2">
+                  <IoImageOutline className="text-xl" />
+                  {previewImg ? "Change" : "Add cover image"}
+                </button>
+              </FileUploader>
+
+              {previewImg && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPreviewImg(null);
+                    setFile(null);
+                  }}
+                  className=" text-red-600"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <SeperatorInput
+          placeholder="Enter technologies used (e.g. React, TailwindCSS)"
+          label="Add Tags:"
+          name="tags"
+          tags={tags}
+          onTagsChange={setTags}
+        />
+        <fieldset className="flex flex-col gap-2">
+          <label className="font-semibold" htmlFor="project_link">
+            Project Link:
+          </label>
+          <input
+            className="border-2 border-black/30 h-14 focus:outline-none rounded-lg px-5 text-light-slate-9 text-sm"
+            type="text"
+            name="project_link"
+            id="project_link"
+            placeholder="Add project preview/live link"
+          />
+        </fieldset>
       </div>
 
       <ForwardRefEditor

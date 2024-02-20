@@ -6,6 +6,7 @@ import TypographyWrapper from "./Wrapper";
 interface TitleProps {
   children: React.ReactNode;
   level?: 1 | 2 | 3 | 4 | 5;
+  title?: string;
   weight?:
     | "thin"
     | "extralight"

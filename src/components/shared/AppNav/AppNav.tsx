@@ -20,10 +20,8 @@ import Socials from "../Socials/Socials";
 
 export const NavLinks = [
   { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "Contact", href: "/about#contact" },
   { label: "About", href: "/about" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Blog", href: "/blog" },
   { label: "Snippets", href: "/snippets" },
 ];
 
@@ -72,6 +70,7 @@ const AppNav = () => {
 
           <div className="flex md:hidden items-center gap-4 md:gap-10">
             <ThemeSwitcher />
+            <UserButton />
             <DropdownMenuPrimitive.Trigger className="focus-visible:outline-none">
               <HamburguerMenu />
             </DropdownMenuPrimitive.Trigger>

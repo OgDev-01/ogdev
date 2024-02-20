@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "drizzle-orm";
+import { currentUser } from "@clerk/nextjs";
 
 import { uploadImage } from "@/backend/utils/cloudinary";
 import { db } from "../config/db";
@@ -33,8 +34,11 @@ export async function createProject(req: NextRequest, res: NextResponse) {
 
   const remoteImageObj = await uploadImage(buffer, filename);
 
+  const { title, subtitle, tags, content } = data;
+
+  const user = await currentUser();
+
   // eslint-disable-next-line no-console
-  console.log(remoteImageObj, slug);
 
   return NextResponse.json({ message: "Project created" }, { status: 201 });
 }
