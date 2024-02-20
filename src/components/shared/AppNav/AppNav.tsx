@@ -20,10 +20,8 @@ import Socials from "../Socials/Socials";
 
 export const NavLinks = [
   { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "Contact", href: "/about#contact" },
   { label: "About", href: "/about" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Blog", href: "/blog" },
   { label: "Snippets", href: "/snippets" },
 ];
 

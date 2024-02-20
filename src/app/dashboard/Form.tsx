@@ -22,7 +22,7 @@ const Form = () => {
     setFile(file);
   };
   const [showDescription, setShowDescription] = useState(false);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!event.currentTarget.title) {
@@ -37,7 +37,24 @@ const Form = () => {
     }
 
     const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+
+    formData.append("content", markdown);
+
+    formData.delete("tags");
+
+    formData.append("tags", JSON.stringify(tags));
+
+    try {
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        body: formData,
+      });
+
+      // console.log(res);
+    } catch (error) {
+      // console.error(error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -52,8 +69,8 @@ const Form = () => {
 
         <div
           className={cn(
-            "flex flex-col md:flex-row gap-4 md:gap-6",
-            previewImg || showDescription ? "flex-col" : ""
+            "flex flex-col gap-4 md:gap-6",
+            previewImg || showDescription ? "flex-col" : "md:flex-row"
           )}
         >
           {showDescription ? (
