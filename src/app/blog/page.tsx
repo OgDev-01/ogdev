@@ -20,7 +20,7 @@ const Blogs = async () => {
   return (
     <div className="container">
       <Title className="text-3xl md:text-5xl text-center pb-10">Blogs</Title>
-      <article className="flex flex-wrap gap-6 justify-center">
+      <article className="flex flex-wrap gap-2 justify-center">
         {blogs.map((blog, idx) => (
           <BlogCard
             key={idx}

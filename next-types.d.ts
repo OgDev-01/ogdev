@@ -59,6 +59,7 @@ interface DEVBlogs {
   readonly page_views_count: number;
   readonly published_timestamp: string;
   readonly reading_time_minutes: number;
+  readonly body_markdown: string;
   readonly user: {
     readonly name: string;
     readonly username: string;

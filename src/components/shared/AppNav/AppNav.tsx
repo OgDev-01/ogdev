@@ -43,9 +43,9 @@ const AppNav = () => {
       >
         <nav
           role="navigation"
-          className="flex items-center justify-between container py-6 relative"
+          className="flex items-center justify-between container relative py-4"
         >
-          <Link href="/">
+          <Link className="" href="/">
             <AppLogo />
           </Link>
 
