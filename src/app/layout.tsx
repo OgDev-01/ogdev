@@ -39,7 +39,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppNav />
-            <main className="py-10">{children}</main>
+            <main className="pt-10 pb-24">{children}</main>
             <Footer />
           </Provider>
         </body>
