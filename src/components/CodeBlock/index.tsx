@@ -43,7 +43,7 @@ const CodeBlock = ({ value, language = undefined }: CodeBlockProps) => {
           Copied
         </span>
       )}
-      <SyntaxHighlighter PreTag="div" language={language} style={coldarkDark}>
+      <SyntaxHighlighter language={language} style={coldarkDark}>
         {value}
       </SyntaxHighlighter>
     </div>

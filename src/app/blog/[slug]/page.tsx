@@ -46,7 +46,7 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
       <article>
         <Title className="text-2xl md:text-4xl  pb-10">{blog.title}</Title>
 
-        <div className="w-full h-44 md:h-96 rounded-lg overflow-hidden relative">
+        <div className="w-full h-48 md:h-96 rounded-lg overflow-hidden relative">
           <Image
             src={blog.cover_image}
             alt={blog.title}
