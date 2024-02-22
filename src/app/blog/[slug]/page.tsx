@@ -81,7 +81,7 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
       </article>
 
       <div className="mt-10 w-full">
-        <Title level={4} className="text-xl md:text-4xl  pb-10">
+        <Title level={4} className="text-2xl md:text-4xl  pb-10">
           Other blog posts
         </Title>
         <div className="flex gap-4 max-md:overflow-x-scroll md:justify-center">
