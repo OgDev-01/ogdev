@@ -126,6 +126,21 @@ const AppNav = () => {
 const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
   const { theme, setTheme } = useTheme();
 
+  if (typeof window === "undefined")
+    return (
+      <button
+        role="theme-switcher"
+        aria-label="Toggle theme"
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        className={cn(
+          "bg-highlight-grey dark:bg-primary-white/10 p-1.5 md:p-2 rounded-xl",
+          classNames
+        )}
+      >
+        <LuSunDim className="text-lg md:text-2xl" />
+      </button>
+    );
+
   return (
     <ClientOnly>
       <button
