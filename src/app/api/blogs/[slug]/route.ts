@@ -14,6 +14,7 @@ export async function GET(
       headers: {
         "api-key": devToApiKey,
       },
+      cache: "no-cache",
     });
 
     const data = await response.json();

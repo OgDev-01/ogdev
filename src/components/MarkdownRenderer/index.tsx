@@ -1,4 +1,5 @@
 "use client";
+import remarkGfm from "remark-gfm";
 import Markdown from "react-markdown";
 import CodeBlock from "../CodeBlock";
 
@@ -8,19 +9,24 @@ interface MarkdownRendererProps {
 const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
   return (
     <Markdown
+      remarkPlugins={[remarkGfm]}
       components={{
         code({ node, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
+          const isInline =
+            typeof children === "string" && !children.endsWith("\n");
 
-          return match ? (
+          if (isInline)
+            return (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+
+          return (
             <CodeBlock
-              language={match[1]}
+              language={!match ? "javascript" : match[1]}
               value={String(children).replace(/\n$/, "")}
-            />
-          ) : (
-            <CodeBlock
-              value={String(children).replace(/\n$/, "")}
-              language="javascript"
             />
           );
         },
