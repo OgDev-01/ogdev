@@ -84,7 +84,7 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
         <Title level={4} className="text-xl md:text-4xl  pb-10">
           Other blog posts
         </Title>
-        <div className="flex gap-4 overflow-x-scroll md:justify-center">
+        <div className="flex gap-4 max-md:overflow-x-scroll md:justify-center">
           {filteredBlogs.length &&
             filteredBlogs.map((blog, idx) => (
               <BlogCard
