@@ -80,11 +80,11 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
         </div>
       </article>
 
-      <div className="mt-10">
+      <div className="mt-10 w-full">
         <Title level={4} className="text-xl md:text-4xl  pb-10">
           Other blog posts
         </Title>
-        <div className="flex flex-wrap gap-3 justify-center">
+        <div className="flex gap-4 overflow-x-scroll md:justify-center">
           {filteredBlogs.length &&
             filteredBlogs.map((blog, idx) => (
               <BlogCard

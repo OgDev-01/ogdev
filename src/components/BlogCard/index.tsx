@@ -37,7 +37,7 @@ const BlogCard = ({
     <Link
       href={`/blog/${slug}_${id}`}
       className={cn(
-        "rounded-xl p-4 max-w-72 bg-highlight-black text-white flex flex-col gap-3"
+        "rounded-xl p-4 max-w-72 min-w-72 bg-highlight-black text-white flex flex-col gap-3"
       )}
     >
       <div className="relative aspect-video rounded-lg overflow-hidden">
