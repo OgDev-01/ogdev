@@ -33,7 +33,7 @@ const AppNav = () => {
   };
 
   const getActiveClass = (href: string) => {
-    return pathname === href ? "opacity-70" : "";
+    return pathname === href ? "opacity-80" : "";
   };
   return (
     <header>
@@ -54,7 +54,9 @@ const AppNav = () => {
               {NavLinks.map(({ label, href }, i) => (
                 <li
                   className={cn(
-                    pathname === href ? "border-b border-black/40" : ""
+                    pathname === href
+                      ? "border-b border-black/40 dark:border-primary-white/40"
+                      : ""
                   )}
                   key={i}
                 >
