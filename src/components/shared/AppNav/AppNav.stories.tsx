@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import AppNav from "./AppNav";
+import AppNav from "./AppNav.1";
 
 type StoryMeta = Meta<typeof AppNav>;
 

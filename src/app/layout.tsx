@@ -4,6 +4,8 @@ import { Chivo_Mono } from "next/font/google";
 import { cn } from "@/libs/utils";
 import AppNav from "@/components/shared/AppNav/AppNav";
 import Footer from "@/components/shared/Footer/Footer";
+import BackButton from "@/components/BackButton";
+import PageTitle from "@/components/shared/PageTitle";
 
 import "./globals.css";
 import "@mdxeditor/editor/style.css";
@@ -38,6 +40,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppNav />
+            <BackButton />
+            <PageTitle />
             <main className="pt-10 pb-24">{children}</main>
             <Footer />
           </Provider>

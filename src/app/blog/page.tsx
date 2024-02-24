@@ -1,6 +1,5 @@
 import { revalidateTag } from "next/cache";
 import BlogCard from "@/components/BlogCard";
-import Title from "@/components/shared/Typography/Title";
 
 const fetchBlogs = async () => {
   const host = process.env.NEXT_PUBLIC_URL_HOST;
@@ -19,7 +18,6 @@ const Blogs = async () => {
 
   return (
     <div className="container">
-      <Title className="text-3xl md:text-5xl text-center pb-10">Blogs</Title>
       <article className="flex flex-wrap gap-2 justify-center">
         {blogs.map((blog, idx) => (
           <BlogCard
