@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
@@ -26,17 +26,40 @@ export const NavLinks = [
 ];
 
 const AppNav = () => {
+  const [isSticky, setIsSticky] = useState(false);
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const handleToggleDropdown = (value: boolean) => {
     setIsOpen(value);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 30) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    document.addEventListener("scroll", handleScroll);
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const getActiveClass = (href: string) => {
     return pathname === href ? "opacity-80" : "";
   };
   return (
-    <header>
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 bg-primary-white/60 dark:bg-secondary-black/60 backdrop-blur-lg transition-all duration-200 ease-in-out",
+        isSticky && "shadow-md"
+      )}
+    >
       <DropdownMenuPrimitive.Root
         onOpenChange={(value) => handleToggleDropdown(value)}
         open={isOpen}
