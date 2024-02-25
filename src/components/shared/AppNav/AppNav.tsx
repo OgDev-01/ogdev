@@ -139,7 +139,7 @@ const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
           classNames
         )}
       >
-        <LuSunDim className="text-lg md:text-2xl" />
+        <BiMoon className="text-lg md:text-2xl" />
       </button>
     );
 

@@ -49,7 +49,7 @@ const About = () => {
           </div>
         </section>
       </div>
-      <section className="py-10 container">
+      <section className="py-20 container">
         <Title
           className="text-center text-xl break-words md:text-2xl"
           level={5}
@@ -103,12 +103,12 @@ const About = () => {
 
       <section className="container mt-12">
         <Title
-          className="text-center text-xl break-words md:text-4xl"
+          className="text-center text-2xl break-words md:text-4xl"
           level={5}
         >
           Get in touch
         </Title>
-        <Text className="text-center text-xl md:w-3/6 mx-auto mt-4">
+        <Text className="text-center text-base md:text-xl md:w-3/6 mx-auto mt-4">
           Got a question or a proposal, or just want to say hello ?
         </Text>
 

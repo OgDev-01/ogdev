@@ -36,7 +36,7 @@ export default function RootLayout({
         >
           <Provider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="light"
             disableTransitionOnChange
           >
             <AppNav />

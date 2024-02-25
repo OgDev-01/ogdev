@@ -46,10 +46,12 @@ const ContactForm = () => {
         onSubmit={handleSubmit}
       >
         <label
-          className=" relative flex border border-secondary-black/50 px-4 py-3 rounded-xl"
+          className=" relative flex border border-secondary-black/50 dark:border-primary-white/50  px-4 py-3 rounded-xl"
           htmlFor="name"
         >
-          <span className="absolute -top-3 bg-white px-3">Name</span>
+          <span className="absolute -top-3 bg-white dark:bg-secondary-black px-3">
+            Name
+          </span>
           <input
             name="name"
             id="name"
@@ -59,10 +61,12 @@ const ContactForm = () => {
           />
         </label>
         <label
-          className=" relative flex border border-secondary-black/50 px-4 py-3 rounded-xl"
+          className=" relative flex border border-secondary-black/50 dark:border-primary-white/50 px-4 py-3 rounded-xl"
           htmlFor="email"
         >
-          <span className="absolute -top-2 bg-white px-4 text-sm">Email</span>
+          <span className="absolute -top-2 bg-white dark:bg-secondary-black px-4 text-sm">
+            Email
+          </span>
           <input
             name="email"
             id="email"
@@ -72,10 +76,12 @@ const ContactForm = () => {
           />
         </label>
         <label
-          className=" relative flex border border-secondary-black/50 px-4 py-3 rounded-xl"
+          className=" relative flex border border-secondary-black/50 dark:border-primary-white/50  px-4 py-3 rounded-xl"
           htmlFor="message"
         >
-          <span className="absolute -top-2 bg-white px-4 text-sm">Message</span>
+          <span className="absolute -top-2 bg-white dark:bg-secondary-black px-4 text-sm">
+            Message
+          </span>
           <textarea
             name="message"
             id="message"
