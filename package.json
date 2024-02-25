@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.5",
+    "@formspree/react": "^2.5.1",
     "@mdxeditor/editor": "^2.8.3",
     "@neondatabase/serverless": "^0.7.2",
     "@radix-ui/react-dropdown-menu": "^2.0.6",

@@ -65,7 +65,9 @@ const Text: React.FC<TextProps> = ({
       )}
       {...props}
     >
-      <TextTag title={title}>{children}</TextTag>
+      <TextTag className={className} title={title}>
+        {children}
+      </TextTag>
     </TypographyWrapper>
   );
 };

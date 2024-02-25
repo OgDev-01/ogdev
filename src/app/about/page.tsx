@@ -8,6 +8,7 @@ import Button from "@/components/shared/Button/Button";
 
 import { Technologies } from "./technologies";
 import { companies } from "./companies";
+import ContactForm from "./Form";
 
 const About = () => {
   return (
@@ -98,6 +99,20 @@ const About = () => {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="container mt-12">
+        <Title
+          className="text-center text-xl break-words md:text-4xl"
+          level={5}
+        >
+          Get in touch
+        </Title>
+        <Text className="text-center text-xl md:w-3/6 mx-auto mt-4">
+          Got a question or a proposal, or just want to say hello ?
+        </Text>
+
+        <ContactForm />
       </section>
     </div>
   );
