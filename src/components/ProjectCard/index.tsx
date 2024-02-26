@@ -32,7 +32,7 @@ const ProjectCard = ({
       className="flex flex-col md:flex-row  rounded-xl overflow-hidden gap-6 bg-highlight-grey/20 dark:bg-highlight-black hover:shadow-lg transition-all duration-300 ease-in-out"
     >
       <div className="relative w-full md:w-[28%] h-48 md:h-52">
-        <Image fill src={cover_image} alt={title} />
+        <Image fill src={cover_image} objectFit="cover" alt={title} />
       </div>
       <div className="flex-1 px-4 pt-0 pb-6 md:py-6 flex flex-col">
         <div className="flex justify-between items-center">
