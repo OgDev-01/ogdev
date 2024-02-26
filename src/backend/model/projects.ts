@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "drizzle-orm";
-import { currentUser } from "@clerk/nextjs";
 
 import { uploadImage } from "@/backend/utils/cloudinary";
 import { db } from "../config/db";
-import { projects } from "../config/schema";
+import { InsertProject, projects } from "../config/schema";
 import { slugifyText } from "../utils/slugify";
 import { validateProject } from "../utils/validateProject";
 
-export async function getAllProjects() {
-  const blogArray = await db
+export async function getAllProjects(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const limit = searchParams.get("limit") ?? "10";
+
+  const projectsArray = await db
     .select()
     .from(projects)
     .where(sql`${projects.deleted_at} IS NULL`)
+    .limit(parseInt(limit))
     .orderBy(sql`created_at DESC`);
 
-  return NextResponse.json(blogArray, { status: 200 });
+  return NextResponse.json(projectsArray, { status: 200 });
 }
 
 export async function createProject(req: NextRequest, res: NextResponse) {
@@ -31,16 +34,29 @@ export async function createProject(req: NextRequest, res: NextResponse) {
 
   const arrayBuffer = await file.arrayBuffer();
   const buffer = new Uint8Array(arrayBuffer);
-
-  const remoteImageObj = await uploadImage(buffer, filename);
+  const remoteImageObj = (await uploadImage(buffer, filename)) as any;
 
   const { title, subtitle, tags, content } = data;
 
-  const user = await currentUser();
+  const payload = {
+    title,
+    subtitle,
+    tags,
+    content,
+    cover_image: remoteImageObj.url,
+    project_link: data.project_link,
+    start_date: new Date(data.start_date as string),
+    end_date: new Date(data.end_date as string),
+    user_id: 1,
+    slug,
+  } as InsertProject;
 
-  // eslint-disable-next-line no-console
+  const project = await db.insert(projects).values(payload).returning();
 
-  return NextResponse.json({ message: "Project created" }, { status: 201 });
+  return NextResponse.json(
+    { message: "Project created", data: project },
+    { status: 201 }
+  );
 }
 
 export async function getProjectById({ params }: { params: { id: string } }) {

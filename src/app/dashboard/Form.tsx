@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PiTextTBold } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,10 +9,14 @@ import { ForwardRefEditor } from "@/components/MdxEditor/ForwardRefEditor";
 import "react-toastify/dist/ReactToastify.css";
 import SeperatorInput from "@/components/shared/Input/SeperatorInput";
 import { cn } from "@/libs/utils";
+import DatePicker from "@/components/DatePicker";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 const Form = () => {
   const [markdown, setMarkdown] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [file, setFile] = useState<File | null>(null);
   const [previewImg, setPreviewImg] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
@@ -40,9 +44,17 @@ const Form = () => {
 
     formData.append("content", markdown);
 
+    if (startDate) {
+      formData.append("start_date", startDate.toISOString());
+    }
+
+    if (endDate) {
+      formData.append("end_date", endDate.toISOString());
+    }
+
     formData.delete("tags");
 
-    formData.append("tags", JSON.stringify(tags));
+    formData.append("tags", tags.join(","));
 
     try {
       const res = await fetch("/api/projects", {
@@ -50,15 +62,25 @@ const Form = () => {
         body: formData,
       });
 
-      // console.log(res);
+      const data = await res.json();
+
+      toast.success("Project created");
+
+      formRef.current?.reset();
+      setPreviewImg(null);
+      setFile(null);
+      setTags([]);
+      setMarkdown("");
+      setStartDate(undefined);
+      setEndDate(undefined);
+      setShowDescription(false);
     } catch (error) {
-      // console.error(error);
       toast.error("Something went wrong");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="">
+    <form ref={formRef} onSubmit={handleSubmit} className="">
       <div className="px-1 flex flex-col gap-4 md:gap-6 mb-4">
         <input
           className="text-4xl h-14 focus:outline-none"
@@ -154,6 +176,20 @@ const Form = () => {
             placeholder="Add project preview/live link"
           />
         </fieldset>
+
+        <div className="flex items-center gap-6">
+          <DatePicker
+            onChange={(day) => setStartDate(day)}
+            value={startDate}
+            placeholder="Start date"
+          />
+
+          <DatePicker
+            onChange={(day) => setEndDate(day)}
+            value={endDate}
+            placeholder="End date"
+          />
+        </div>
       </div>
 
       <ForwardRefEditor

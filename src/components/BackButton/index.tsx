@@ -1,6 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { GoArrowLeft } from "react-icons/go";
+import { ignoredPaths } from "../shared/PageTitle";
 
 const BackButton = () => {
   const pathname = usePathname();
@@ -10,7 +11,7 @@ const BackButton = () => {
     router.back();
   };
 
-  if (pathname === "/") return null;
+  if (ignoredPaths.includes(pathname)) return null;
 
   return (
     <div className="container pt-16 md:pt-24">

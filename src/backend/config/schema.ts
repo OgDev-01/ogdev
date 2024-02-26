@@ -1,4 +1,4 @@
-import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { serial, text, pgTable, timestamp } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
@@ -22,6 +22,7 @@ export const projects = pgTable("project", {
   start_date: timestamp("start_date").notNull().defaultNow(),
   end_date: timestamp("end_date").notNull().defaultNow(),
   slug: text("slug").notNull().unique(),
+  tags: text("tags"),
   subtitle: text("subtitle"),
   cover_image: text("cover_image").notNull(),
   content: text("content").notNull(),
@@ -29,22 +30,6 @@ export const projects = pgTable("project", {
   updated_at: timestamp("updated_at").notNull().defaultNow(),
   deleted_at: timestamp("deleted_at"),
 });
-
-export const tags = pgTable("tag", {
-  id: serial("id").primaryKey().notNull(),
-  name: text("name").notNull().unique(),
-  created_at: timestamp("created_at").notNull().defaultNow(),
-  updated_at: timestamp("updated_at").notNull().defaultNow(),
-  deleted_at: timestamp("deleted_at"),
-});
-
-export const projectsRelations = relations(projects, ({ many }) => ({
-  tags: many(tags),
-}));
-
-export const tagsRelations = relations(tags, ({ many }) => ({
-  projects: many(projects),
-}));
 
 export const codeSnipets = pgTable("code_snipet", {
   id: serial("id").primaryKey().notNull(),
@@ -63,3 +48,4 @@ export const codeSnipets = pgTable("code_snipet", {
 
 export type InsertUser = InferInsertModel<typeof users>;
 export type SelectUser = InferSelectModel<typeof users>;
+export type InsertProject = InferInsertModel<typeof projects>;

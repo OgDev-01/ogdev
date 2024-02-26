@@ -19,8 +19,18 @@ export const validateProject = (project: any) => {
     );
   }
 
-  if (!project.tags) {
-    return NextResponse.json({ message: "Tags are required" }, { status: 400 });
+  if (!project.start_date) {
+    return NextResponse.json(
+      { message: "Start date is required" },
+      { status: 400 }
+    );
+  }
+
+  if (!project.end_date) {
+    return NextResponse.json(
+      { message: "End date is required" },
+      { status: 400 }
+    );
   }
 
   if (!project.content) {

@@ -2,7 +2,7 @@ import Form from "./Form";
 
 const Dashboard = async () => {
   return (
-    <div className="container">
+    <div className="container pt-20">
       <Form />
     </div>
   );

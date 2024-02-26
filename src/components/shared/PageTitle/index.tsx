@@ -2,11 +2,13 @@
 import { usePathname } from "next/navigation";
 import Title from "../Typography/Title";
 
+export const ignoredPaths = ["/", "/sign-in", "/sign-up", "/dashboard"];
+
 const PageTitle = () => {
   const pathname = usePathname();
   const segments = pathname.split("/");
 
-  if (pathname === "/" || segments.length > 2) {
+  if (ignoredPaths.includes(pathname) || segments.length < 2) {
     return null;
   }
 
