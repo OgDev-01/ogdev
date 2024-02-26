@@ -72,8 +72,8 @@ export default async function Home() {
       <section className="container mt-20 overflow-hidden">
         <div className="flex justify-between items-center">
           <Title level={3}>Blog post</Title>
-          <Link className="flex items-center gap-2" href="/projects">
-            View more <VscArrowRight className="text-2xl" />
+          <Link className="flex items-center gap-2" href="/blog">
+            View all posts <VscArrowRight className="text-2xl" />
           </Link>
         </div>
 

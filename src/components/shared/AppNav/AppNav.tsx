@@ -189,6 +189,36 @@ const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
 
 const HamburguerMenu = () => {
   const { theme } = useTheme();
+  if (typeof window === "undefined")
+    return (
+      <>
+        <svg
+          width="30"
+          height="18"
+          viewBox="0 0 30 21"
+          fill="none"
+          className="md:hidden"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect y="0.5" width="30" height="4" rx="2" fill={"#0A0A0A"} />
+          <rect x="10" y="8.5" width="20" height="4" rx="2" fill={"#0A0A0A"} />
+          <rect x="20" y="16.5" width="10" height="4" rx="2" fill={"#0A0A0A"} />
+        </svg>
+        <svg
+          width="55"
+          height="28"
+          viewBox="0 0 65 40"
+          fill="none"
+          className="hidden md:block"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="60" height="8" rx="4" fill={"#0A0A0A"} />
+          <rect x="20" y="16" width="40" height="8" rx="4" fill={"#0A0A0A"} />
+          <rect x="40" y="32" width="20" height="8" rx="4" fill={"#0A0A0A"} />
+        </svg>
+      </>
+    );
+
   return (
     <button
       aria-label="Toggle theme"
