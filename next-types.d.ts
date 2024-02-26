@@ -22,9 +22,13 @@ interface DbProject {
   readonly user_id: number;
   readonly title: string;
   readonly slug: string;
-  readonly description: string;
+  readonly subtitle: string;
   readonly cover_image: string;
+  readonly tags: string;
   readonly content: string;
+  readonly project_link: string;
+  readonly start_date: string;
+  readonly end_date: string;
   readonly created_at: string;
   readonly updated_at: string;
   readonly deleted_at: string;
