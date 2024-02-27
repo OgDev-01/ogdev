@@ -22,7 +22,7 @@ export const NavLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Snippets", href: "/snippets" },
+  { label: "Projects", href: "/projects" },
 ];
 
 const AppNav = () => {

@@ -10,7 +10,7 @@ interface ProjectCardProps {
   slug: string;
   subtitle?: string;
   cover_image: string;
-  content: string;
+  content?: string;
   project_link: string;
   start_date: string;
   end_date: string;
@@ -27,13 +27,13 @@ const ProjectCard = ({
   tags,
 }: ProjectCardProps) => {
   return (
-    <Link
-      href={`/projects/${slug}`}
-      className="flex flex-col md:flex-row  rounded-xl overflow-hidden gap-6 bg-highlight-grey/20 dark:bg-highlight-black hover:shadow-lg transition-all duration-300 ease-in-out"
-    >
-      <div className="relative w-full md:w-[28%] h-48 md:h-52">
+    <div className="flex flex-col md:flex-row  rounded-xl overflow-hidden gap-6 bg-highlight-grey/20 dark:bg-highlight-black hover:shadow-lg transition-all duration-300 ease-in-out">
+      <Link
+        href={`/projects/${slug}`}
+        className="relative w-full md:w-[28%] h-48 md:h-52"
+      >
         <Image fill src={cover_image} objectFit="cover" alt={title} />
-      </div>
+      </Link>
       <div className="flex-1 px-4 pt-0 pb-6 md:py-6 flex flex-col">
         <div className="flex justify-between items-center">
           <div className="px-3 py-1 text-sm rounded-full bg-[#E0EAF6] text-[#2E6BB5]">
@@ -45,7 +45,7 @@ const ProjectCard = ({
             rel="noreferrer"
             className="text-sm flex items-center gap-2 text-primary-button dark:text-white"
           >
-            View Project <TbExternalLink className="text-xl" />
+            View Live <TbExternalLink className="text-xl" />
           </a>
         </div>
 
@@ -67,7 +67,7 @@ const ProjectCard = ({
           ))}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

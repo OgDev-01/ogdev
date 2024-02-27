@@ -31,7 +31,7 @@ const MarkdownRenderer = ({ content }: MarkdownRendererProps) => {
           );
         },
       }}
-      className="prose max-w-none lg:prose-lg dark:prose-invert break-words"
+      className="prose max-w-none lg:prose-lg dark:prose-invert break-words prose-img:rounded-lg prose-code:bg-secondary-black/10 prose-code:px-0.5 prose-code:rounded-md prose-code:pt-0.5 prose-code:dark:bg-highlight-grey/20"
     >
       {content}
     </Markdown>
