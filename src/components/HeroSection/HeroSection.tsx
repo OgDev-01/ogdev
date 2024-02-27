@@ -13,7 +13,7 @@ const HeroSection = () => {
         >
           Ogbonna <br /> Sunday
         </h1>
-        <Text className="text-center leading-5 md:text-xl md:w-4/5">
+        <Text className="text-center leading-5 md:text-xl md:w-4/5 mx-auto">
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
           sint. Velit officia consequat duis enim velit mollit. Exercitatit.
         </Text>
