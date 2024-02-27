@@ -1,5 +1,5 @@
 import { createEdgeRouter } from "next-connect";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getProjectBySlug } from "@/backend/model/projects";
 
 interface RequestContext {
@@ -15,5 +15,5 @@ router.get(async (req, { params }) => {
 });
 
 export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<NextResponse>;
 }
