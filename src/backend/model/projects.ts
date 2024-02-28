@@ -18,7 +18,12 @@ export async function getAllProjects(req: NextRequest) {
     .limit(parseInt(limit))
     .orderBy(sql`created_at DESC`);
 
-  return NextResponse.json(projectsArray, { status: 200 });
+  return NextResponse.json(
+    {
+      data: projectsArray,
+    },
+    { status: 200 }
+  );
 }
 
 export async function createProject(req: NextRequest, res: NextResponse) {
@@ -99,6 +104,67 @@ export async function getProjectBySlug({
   return NextResponse.json({ data: project[0] }, { status: 200 });
 }
 
-export async function updateProject(req: NextRequest) {}
+export async function updateProject(
+  req: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const formData = await req.formData();
+  const data = Object.fromEntries(formData);
 
-export async function deleteProject(req: NextRequest) {}
+  const slug = params.slug;
+
+  const file = data.cover_image as File;
+
+  let remoteImageObj = null;
+
+  if (file.name !== "undefined") {
+    const filename = `${Date.now().toString(36)}-${file.name.replace(/\..+$/, "")}-${Math.random().toString(36).substr(2, 9)}`;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    remoteImageObj = (await uploadImage(buffer, filename)) as any;
+  }
+  const { title, subtitle, tags, content } = data;
+
+  const payload = {
+    title,
+    subtitle,
+    tags,
+    content,
+    project_link: data.project_link,
+    start_date: new Date(data.start_date as string),
+    end_date: new Date(data.end_date as string),
+  } as InsertProject;
+  if (remoteImageObj) {
+    payload.cover_image = remoteImageObj.url;
+  }
+
+  const project = await db
+    .update(projects)
+    .set(payload)
+    .where(sql`${projects.slug} = ${slug}`)
+    .returning();
+
+  return NextResponse.json(
+    { message: "Project updated", data: project },
+    { status: 200 }
+  );
+}
+
+export async function deleteProject(
+  req: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const slug = params.slug;
+
+  const project = await db
+    .update(projects)
+    .set({ deleted_at: new Date() })
+    .where(sql`${projects.slug} = ${slug}`)
+    .returning();
+
+  return NextResponse.json(
+    { message: "Project deleted", data: project },
+    { status: 200 }
+  );
+}

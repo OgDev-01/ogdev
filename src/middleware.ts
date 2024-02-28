@@ -13,6 +13,7 @@ export default authMiddleware({
     "/about",
     "/contact",
     "/snippets",
+    "/__nextjs_original-stack-frame",
   ],
 });
 

@@ -46,6 +46,7 @@ const Projects = async () => {
             project_link={project_link}
             id={id}
             tags={tags}
+            isEditable
           />
         )
       )}

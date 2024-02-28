@@ -30,8 +30,8 @@ const getOtherProjects = async () => {
   const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
     const res = await fetch(`${host}/api/projects?limit=3`);
-    const data = (await res.json()) as DbProject[];
-    return data;
+    const data = await res.json();
+    return data.data as DbProject[];
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -126,13 +126,13 @@ const page = async ({ params }: ProjectProps) => {
         </a>
       </article>
 
-      <div className="mt-20 w-full">
-        <Title level={4} className="text-2xl md:text-3xl  pb-10">
-          Other Projects
-        </Title>
-        <div className="w-full">
-          {filteredProjects.length &&
-            filteredProjects.map((project, idx) => (
+      {filteredProjects.length > 0 && (
+        <div className="mt-20 w-full">
+          <Title level={4} className="text-2xl md:text-3xl  pb-10">
+            Other Projects
+          </Title>
+          <div className="w-full">
+            {filteredProjects.map((project, idx) => (
               <ProjectCard
                 key={idx}
                 slug={project.slug}
@@ -145,8 +145,9 @@ const page = async ({ params }: ProjectProps) => {
                 end_date={project.end_date}
               />
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

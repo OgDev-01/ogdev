@@ -8,7 +8,7 @@ const PageTitle = () => {
   const pathname = usePathname();
   const segments = pathname.split("/");
 
-  if (ignoredPaths.includes(pathname) || segments.length < 2) {
+  if (ignoredPaths.includes(pathname) || segments.length > 2) {
     return null;
   }
 
