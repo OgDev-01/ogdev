@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img alt="Og Dev" src="public/logo.png" width="300px">
+  <img alt="Og Dev" src="https://res.cloudinary.com/smithtech/image/upload/v1709138537/l7waozldwzauwpvakgb5.png" width="300px">
   <h1>🔥 ogdev.vercel.app 🔥</h1>
   <strong>My personal portfolio v2</strong>
 </div>
