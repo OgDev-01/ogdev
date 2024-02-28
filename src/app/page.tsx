@@ -12,7 +12,9 @@ import BlogCard from "@/components/BlogCard";
 const getProjects = async () => {
   const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const res = await fetch(`${host}/api/projects?limit=3`);
+    const res = await fetch(`${host}/api/projects?limit=3`, {
+      cache: "no-cache",
+    });
     const data = (await res.json()) as DbProject[];
     return data;
   } catch (error) {
@@ -22,7 +24,9 @@ const getProjects = async () => {
 };
 const fetchBlogs = async () => {
   const host = process.env.NEXT_PUBLIC_URL_HOST;
-  const res = await fetch(`${host}/api/blogs?limit=3`);
+  const res = await fetch(`${host}/api/blogs?limit=3`, {
+    cache: "no-cache",
+  });
 
   if (res.ok) {
     const data = (await res.json()) as DEVBlogs[];
