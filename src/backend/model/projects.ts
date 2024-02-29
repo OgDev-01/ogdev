@@ -79,7 +79,12 @@ export async function getProjectById({ params }: { params: { id: string } }) {
     return NextResponse.json({ message: "Blog not found" }, { status: 404 });
   }
 
-  return NextResponse.json(project, { status: 200 });
+  return NextResponse.json(
+    {
+      data: project[0],
+    },
+    { status: 200 }
+  );
 }
 
 export async function getProjectBySlug({

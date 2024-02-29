@@ -1,10 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import Text from "@/components/shared/Typography/Text";
 import Title from "@/components/shared/Typography/Title";
 import ProfilePhoto from "public/me.png";
 import Icon, { Technology } from "@/components/Icon";
-
-import Button from "@/components/shared/Button/Button";
 
 import { Technologies } from "./technologies";
 import { companies } from "./companies";
@@ -26,25 +26,44 @@ const About = () => {
                 optimized and interactive web applications.
               </p>
               <Text className="text-primary-white text-sm ">
-                I have a passion for building scalable software, creating
-                effective solutions, and learning new technologies. I am
-                currently open to new opportunities.
+                I thrive on creating optimized and interactive web applications,
+                drawing from my experience as a former maintainer of an
+                open-source project. I approach every line of code as a chance
+                to evolve and enhance your digital experience.
               </Text>
               <div className="hidden md:flex items-center gap-10 mt-4">
-                <Button isPrimary variant="outlined">
+                <a
+                  href="/OGBONNA-SUNDAY.pdf"
+                  className=" border-2 border-secondary-button text-white px-6 py-2 rounded-full  transition hover:bg-secondary-button hover:text-white"
+                  download="OGBONNA-SUNDAY.pdf"
+                >
                   Download CV
-                </Button>
-                <Button isPrimary>Contact Me</Button>
+                </a>
+                <Link
+                  href="/about#contact"
+                  className="bg-secondary-button px-6 py-2 rounded-full"
+                >
+                  Contact Me
+                </Link>
               </div>
             </div>
             <div className="flex-1">
               <Image priority src={ProfilePhoto} alt="Ogbonna Sunday" />
             </div>
             <div className="flex md:hidden items-center gap-10 mt-4">
-              <Button isPrimary variant="outlined">
+              <a
+                href="/OGBONNA-SUNDAY.pdf"
+                className=" border-2 border-secondary-button text-white px-6 py-2 rounded-full  transition hover:bg-secondary-button hover:text-white"
+                download="OGBONNA-SUNDAY.pdf"
+              >
                 Download CV
-              </Button>
-              <Button isPrimary>Contact Me</Button>
+              </a>
+              <Link
+                href="/about#contact"
+                className="bg-secondary-button px-6 py-2 rounded-full"
+              >
+                Contact Me
+              </Link>
             </div>
           </div>
         </section>
@@ -101,7 +120,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="container mt-12">
+      <section id="contact" className="container mt-12">
         <Title
           className="text-center text-2xl break-words md:text-4xl"
           level={5}

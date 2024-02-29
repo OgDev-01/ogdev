@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const devToApi = process.env.DEV_TO_API_URL ?? "";
 const devToApiKey = process.env.DEV_TO_API_KEY ?? "";
@@ -19,9 +19,7 @@ export async function GET(
 
     const data = await response.json();
 
-    return new Response(JSON.stringify(data), {
-      status: 200,
-    });
+    return NextResponse.json({ data }, { status: 200 });
   } catch (e) {
     return new Response("No blogs found", {
       status: 404,

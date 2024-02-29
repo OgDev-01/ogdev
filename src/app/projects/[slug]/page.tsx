@@ -6,20 +6,15 @@ import Title from "@/components/shared/Typography/Title";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import ProjectCard from "@/components/ProjectCard";
 import Text from "@/components/shared/Typography/Text";
-
-interface DbProjectResponse {
-  data: DbProject;
-}
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getSingleProjectBySlug = async (slug: string) => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
-
   try {
-    const res = await fetch(`${host}/api/projects/${slug}`, {
+    const { data } = await fetchApiData<DbProject>(`/projects/${slug}`, {
       cache: "no-cache",
     });
-    const data = (await res.json()) as DbProjectResponse;
-    return data.data;
+
+    return data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -27,11 +22,12 @@ const getSingleProjectBySlug = async (slug: string) => {
 };
 
 const getOtherProjects = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const res = await fetch(`${host}/api/projects?limit=3`);
-    const data = await res.json();
-    return data.data as DbProject[];
+    const { data } = await fetchApiData<DbProject[]>("/projects?limit=3", {
+      cache: "no-cache",
+    });
+
+    return data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
