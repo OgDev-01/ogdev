@@ -1,25 +1,115 @@
-import Image from "next/image";
-import LightWave from "public/light-wave.svg";
+import { VscArrowRight } from "react-icons/vsc";
+import { BsArrowUpRightCircle } from "react-icons/bs";
 
-export default function Home() {
+import Link from "next/link";
+
+import HeroSection from "@/components/HeroSection/HeroSection";
+import Title from "@/components/shared/Typography/Title";
+import ProjectCard from "@/components/ProjectCard";
+import { truncateString } from "@/libs/utils";
+import BlogCard from "@/components/BlogCard";
+import { fetchApiData } from "@/libs/helpers/fetcher";
+
+const getProjects = async () => {
+  try {
+    const res = await fetchApiData<DbProject[]>("/projects?limit=3", {
+      cache: "no-cache",
+    });
+    return res.data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
+const fetchBlogs = async () => {
+  try {
+    const res = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
+      cache: "no-cache",
+    });
+    return res.data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
+
+export default async function Home() {
+  const projects = await getProjects();
+  const blogs = await fetchBlogs();
+
   return (
-    <main className="w-full flex items-end min-h-screen">
-      {/* <Image src={LightWave} alt="Light Wave" /> */}
-      <svg
-        width="1512"
-        height="801"
-        viewBox="0 0 1512 801"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        // make it responsive
-        preserveAspectRatio="none"
-        className="w-full h-auto"
-      >
-        <path
-          d="M42.5824 633.403C2.15884 668.078 -13 780.773 -13 780.773V801H1514V0C1514 0 1486.21 104.026 1468.52 118.474C1450.84 132.922 1443.76 131.188 1412.94 158.929C1382.12 186.669 1377.57 208.052 1357.36 265.844C1337.15 323.636 1339.67 366.98 1314.41 413.214C1289.14 459.448 1233.56 534.578 1185.56 497.013C1137.56 459.448 1160.29 430.552 1132.5 366.98C1104.71 303.409 1044.08 231.169 965.25 231.169C886.424 231.169 914.721 265.844 854.085 265.844C793.45 265.844 778.291 231.169 707.55 231.169C636.809 231.169 631.756 265.844 563.541 265.844C495.326 265.844 478.146 231.169 434.186 231.169C390.225 231.169 386.183 231.169 345.759 265.844C305.336 300.52 320.494 366.98 282.597 413.214C244.7 459.448 221.962 390.097 176.485 445C131.009 499.903 176.485 595.838 143.641 616.065C110.797 636.292 83.006 598.727 42.5824 633.403Z"
-          fill="#0A0A0A"
-        />
-      </svg>
+    <main className="w-full">
+      <HeroSection />
+      <section className="container mt-20">
+        <div className="flex justify-between items-center">
+          <Title level={3}>Projects</Title>
+          <Link className="flex items-center gap-2" href="/projects">
+            View more <VscArrowRight className="text-2xl" />
+          </Link>
+        </div>
+        <div className="flex flex-col mt-8 gap-6">
+          {projects && projects.length > 0
+            ? projects.map((project, idx) => (
+                <ProjectCard
+                  key={idx}
+                  id={project.id}
+                  title={
+                    project.title.length > 50
+                      ? truncateString(project.title, 50)
+                      : project.title
+                  }
+                  tags={project.tags}
+                  slug={project.slug}
+                  cover_image={project.cover_image}
+                  content={project.content}
+                  project_link={project.project_link}
+                  start_date={project.start_date}
+                  end_date={project.end_date}
+                />
+              ))
+            : null}
+        </div>
+      </section>
+      <section className="container mt-20 overflow-hidden">
+        <div className="flex justify-between items-center">
+          <Title level={3}>Blog post</Title>
+          <Link className="flex items-center gap-2" href="/blog">
+            View all posts <VscArrowRight className="text-2xl" />
+          </Link>
+        </div>
+
+        <article className="flex gap-4 max-md:overflow-x-scroll md:justify-center mt-10 pr-5 md:pr-0">
+          {blogs?.map((blog, idx) => (
+            <BlogCard
+              key={idx}
+              slug={blog.slug}
+              title={blog.title}
+              created_at={blog.published_at}
+              reading_time_minutes={blog.reading_time_minutes}
+              cover_image={blog.cover_image}
+              id={blog.id}
+              page_views_count={blog.page_views_count}
+              user={{
+                name: blog.user.name,
+                avatar_url: blog.user.profile_image,
+              }}
+            />
+          ))}
+        </article>
+      </section>
+
+      <div className="container mt-20">
+        <Title className="text-5xl md:text-8xl font-extrabold" level={4}>
+          Let’s work <br /> together !!
+        </Title>
+        <a
+          rel="noreferral"
+          href="mailto:hello@ogbonna.dev"
+          className="text-2xl md:text-5xl flex text-primary-button font-semibold mt-10 items-center gap-6"
+        >
+          Hello@ogbonna.dev <BsArrowUpRightCircle />
+        </a>
+      </div>
     </main>
   );
 }

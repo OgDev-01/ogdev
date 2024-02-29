@@ -1,3 +1,26 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:storybook/recommended", "plugin:prettier/recommended"],
+  "plugins": ["unused-imports", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  
+  "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "jsx-quotes": "error",
+    "unused-imports/no-unused-imports": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "object", "type", "index", "parent", "sibling"]
+      }
+    ],
+    "no-console": "error",
+    "no-debugger": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ]
+  }
 }

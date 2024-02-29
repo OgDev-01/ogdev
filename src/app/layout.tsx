@@ -1,8 +1,19 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Chivo_Mono } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/libs/utils";
+import AppNav from "@/components/shared/AppNav/AppNav";
+import Footer from "@/components/shared/Footer/Footer";
+import BackButton from "@/components/BackButton";
+import PageTitle from "@/components/shared/PageTitle";
+
+import "./globals.css";
+import "@mdxeditor/editor/style.css";
+import type { Metadata } from "next";
+
+import Provider from "./theme-provider";
+
+const chivoMono = Chivo_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +26,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            chivoMono.className,
+            "bg-primary-white dark:bg-secondary-black text-secondary-black dark:text-primary-white transition-colors duration-200 ease-in-out overflow-x-hidden"
+          )}
+        >
+          <Provider
+            attribute="class"
+            defaultTheme="light"
+            disableTransitionOnChange
+          >
+            <AppNav />
+            <BackButton />
+            <PageTitle />
+            <main className="pt-10 pb-24">{children}</main>
+            <Footer />
+          </Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -2,7 +2,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class", '[data-theme="dark"]'],
+  darkMode: ["class"],
   content: [
     "src/app/**/*.{js,ts,jsx,tsx}", // Note the addition of the `app` directory.
     "src/pages/**/*.{js,ts,jsx,tsx}",
@@ -33,16 +33,16 @@ module.exports = {
         padding: {
           DEFAULT: "15px",
           sm: "0",
-          lg: "0",
-          xl: "0",
-          "2xl": "0",
+          lg: "24px",
+          xl: "24px",
+          "2xl": "24px",
         },
         screens: {
           sm: "540px",
           md: "720px",
           lg: "960px",
-          xl: "1140px",
-          "2xl": "1260px",
+          xl: "960px",
+          "2xl": "960px",
         },
       },
       screens: {
@@ -62,7 +62,7 @@ module.exports = {
           black: "hsla(0, 0%, 4%, 1)",
           button: "hsla(248, 62%, 58%, 1)",
         },
-        hightlight: {
+        highlight: {
           skyblue: "hsla(213, 55%, 92%, 1)",
           blue: "hsla(213, 59%, 45%, 1)",
           grey: "hsla(0, 1%, 79%, 0.5)",
@@ -71,5 +71,5 @@ module.exports = {
       },
     },
   },
-  lugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

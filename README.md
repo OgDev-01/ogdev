@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img alt="Open Sauced" src="/public/logo.png" width="300px">
+  <img alt="Og Dev" src="https://res.cloudinary.com/smithtech/image/upload/v1709138537/l7waozldwzauwpvakgb5.png" width="300px">
   <h1>🔥 ogdev.vercel.app 🔥</h1>
   <strong>My personal portfolio v2</strong>
 </div>
@@ -10,18 +10,25 @@
 
 The figma for this project can be found [here](https://www.figma.com/file/1vn9HwlgilaJdDRTQrFUku/OG_dev_portfolio?node-id=194%3A6923&t=Ia8Cw6pA4csnoMN1-1)
 
-## 🔬 Atomic Design
-
-This project uses Atomic Design for it's Components. Here are several resources for Atomic Design if you are unfamiliar:
-
--   [Atomic Design by Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
--   [Atomic Design - How To Make Web and UI Design Easier](https://www.youtube.com/watch?v=W3A33dmp17E)
-
 ## 📙 Storybook
 
 The project uses storybook for component testing and design system, if you are unfamiliar:
 
--   [Introduction to Storybook](https://storybook.js.org/docs/react/get-started/introduction)
+- [Introduction to Storybook](https://storybook.js.org/docs/react/get-started/introduction)
+
+### Storybook local development
+
+To start storybook locally:
+
+```shell
+npm run storybook
+```
+
+To build storybook:
+
+```shell
+npm run build-storybook
+```
 
 ## Getting Started
 
@@ -39,6 +46,22 @@ To start a local copy of the app on port `3000`:
 npm run dev
 ```
 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### DB Migrations
+
+To run migrations:
+
+```bash
+npm run migrations
+```
+
+To apply migrations to Neon Serverless Db
+
+```bash
+npm run apply-migrations
+```
+
 ### 🚀 Production deployment
 
 A production deployment is a complete build of the project, including the build of the static assets.
@@ -47,4 +70,8 @@ A production deployment is a complete build of the project, including the build 
 npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run the production deployment:
+
+```shell
+npm run start
+```
