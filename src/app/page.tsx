@@ -1,39 +1,36 @@
-import { revalidateTag } from "next/cache";
 import { VscArrowRight } from "react-icons/vsc";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
 import Link from "next/link";
+
 import HeroSection from "@/components/HeroSection/HeroSection";
 import Title from "@/components/shared/Typography/Title";
 import ProjectCard from "@/components/ProjectCard";
 import { truncateString } from "@/libs/utils";
 import BlogCard from "@/components/BlogCard";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getProjects = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const res = await fetch(`${host}/api/projects?limit=3`, {
+    const res = await fetchApiData<DbProject[]>("/projects?limit=3", {
       cache: "no-cache",
     });
-    const data = (await res.json()) as DbProject[];
-    return data;
+    return res.data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
   }
 };
 const fetchBlogs = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
-  const res = await fetch(`${host}/api/blogs?limit=3`, {
-    cache: "no-cache",
-  });
-
-  if (res.ok) {
-    const data = (await res.json()) as DEVBlogs[];
-    revalidateTag("");
-    return data;
+  try {
+    const res = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
+      cache: "no-cache",
+    });
+    return res.data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
   }
-  throw new Error("Failed to fetch blogs data");
 };
 
 export default async function Home() {
@@ -82,7 +79,7 @@ export default async function Home() {
         </div>
 
         <article className="flex gap-4 max-md:overflow-x-scroll md:justify-center mt-10 pr-5 md:pr-0">
-          {blogs.map((blog, idx) => (
+          {blogs?.map((blog, idx) => (
             <BlogCard
               key={idx}
               slug={blog.slug}
@@ -116,5 +113,3 @@ export default async function Home() {
     </main>
   );
 }
-
-export const runtime = "edge";

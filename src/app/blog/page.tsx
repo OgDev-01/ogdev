@@ -1,20 +1,24 @@
-import { revalidateTag } from "next/cache";
 import BlogCard from "@/components/BlogCard";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const fetchBlogs = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
-  const res = await fetch(`${host}/api/blogs`);
-
-  if (res.ok) {
-    const data = (await res.json()) as DEVBlogs[];
-    revalidateTag("");
+  try {
+    const { data } = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
+      cache: "no-cache",
+    });
     return data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
   }
-  throw new Error("Failed to fetch blogs data");
 };
 
 const Blogs = async () => {
   const blogs = await fetchBlogs();
+
+  if (!blogs) {
+    return <div className="container text-center">No blogs found</div>;
+  }
 
   return (
     <div className="container">

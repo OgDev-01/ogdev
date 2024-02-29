@@ -1,13 +1,13 @@
 import ProjectCard from "@/components/ProjectCard";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getAllProjects = async () => {
   const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const res = await fetch(`${host}/api/projects`, {
+    const res = await fetchApiData<DbProject[]>(`/projects`, {
       cache: "no-cache",
     });
-    const data = await res.json();
-    return data.data as DbProject[];
+    return res.data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);

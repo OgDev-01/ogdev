@@ -6,23 +6,30 @@ import Title from "@/components/shared/Typography/Title";
 import Avatar from "@/components/Avatar";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import BlogCard from "@/components/BlogCard";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getSingleBlog = async (id: string) => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
-  const res = await fetch(`${host}/api/blogs/${id}`, { cache: "no-cache" });
-  const data = (await res.json()) as DEVBlogs;
-  return data;
+  try {
+    const { data } = await fetchApiData<DEVBlogs>(`/blogs/${id}`, {
+      cache: "no-cache",
+    });
+    return data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
+  }
 };
 
 const fetchBlogs = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
-  const res = await fetch(`${host}/api/blogs?limit=4`, { cache: "no-cache" });
-
-  if (res.ok) {
-    const data = (await res.json()) as DEVBlogs[];
+  try {
+    const { data } = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
+      cache: "no-cache",
+    });
     return data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
   }
-  throw new Error("Failed to fetch blogs data");
 };
 
 interface BlogDetailsProps {
@@ -39,7 +46,17 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
 
   const moreBlogs = await fetchBlogs();
 
-  const filteredBlogs = moreBlogs.filter((blog) => blog.id !== +id).slice(0, 3);
+  const filteredBlogs = moreBlogs
+    ? moreBlogs.filter((blog) => blog.id !== +id).slice(0, 3)
+    : [];
+
+  if (!blog) {
+    return (
+      <div className="container">
+        <Title level={3}>Blog not found</Title>
+      </div>
+    );
+  }
 
   return (
     <div className="container">

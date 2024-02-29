@@ -14,15 +14,16 @@ const HeroSection = () => {
           Ogbonna <br /> Sunday
         </h1>
         <Text className="text-center leading-5 md:text-xl md:w-4/5 mx-auto">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitatit.
+          Crafting the future with code, where each line paints a canvas of
+          limitless possibilities, and every function tells a story of
+          technological advancement
         </Text>
 
         <Text className="font-bold text-center md:text-xl">
           Software Engineer | Javascript Developer
         </Text>
 
-        <div className="mt-8">
+        <div className="mt-8 mx-auto">
           <Socials />
         </div>
       </div>
