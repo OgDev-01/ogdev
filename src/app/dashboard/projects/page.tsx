@@ -1,20 +1,16 @@
+import { getAllProjects } from "@/backend/model/projects";
 import ProjectCard from "@/components/ProjectCard";
 
-const getAllProjects = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
+const getProjects = async () => {
   try {
-    const res = await fetch(`${host}/api/projects`, {
-      cache: "no-cache",
-    });
-    const data = await res.json();
-    return data.data as DbProject[];
+    return await getAllProjects("10");
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
   }
 };
 const Projects = async () => {
-  const projects = await getAllProjects();
+  const projects = await getProjects();
 
   return (
     <div className="container flex flex-col gap-6">
@@ -37,7 +33,7 @@ const Projects = async () => {
           <ProjectCard
             key={idx}
             title={title}
-            subtitle={subtitle}
+            subtitle={subtitle ?? ""}
             slug={slug}
             content={content}
             cover_image={cover_image}
@@ -45,7 +41,7 @@ const Projects = async () => {
             end_date={end_date}
             project_link={project_link}
             id={id}
-            tags={tags}
+            tags={tags ?? ""}
             isEditable
           />
         )

@@ -9,13 +9,12 @@ import ProjectCard from "@/components/ProjectCard";
 import { truncateString } from "@/libs/utils";
 import BlogCard from "@/components/BlogCard";
 import { fetchApiData } from "@/libs/helpers/fetcher";
+import { getAllProjects } from "@/backend/model/projects";
 
 const getProjects = async () => {
   try {
-    const res = await fetchApiData<DbProject[]>("/projects?limit=3", {
-      cache: "no-cache",
-    });
-    return res.data;
+    const projects = await getAllProjects("3");
+    return projects;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -58,7 +57,7 @@ export default async function Home() {
                       ? truncateString(project.title, 50)
                       : project.title
                   }
-                  tags={project.tags}
+                  tags={project.tags ?? ""}
                   slug={project.slug}
                   cover_image={project.cover_image}
                   content={project.content}

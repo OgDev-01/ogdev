@@ -6,15 +6,13 @@ import Title from "@/components/shared/Typography/Title";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import ProjectCard from "@/components/ProjectCard";
 import Text from "@/components/shared/Typography/Text";
-import { fetchApiData } from "@/libs/helpers/fetcher";
+import { getAllProjects, getProjectBySlug } from "@/backend/model/projects";
 
 const getSingleProjectBySlug = async (slug: string) => {
   try {
-    const { data } = await fetchApiData<DbProject>(`/projects/${slug}`, {
-      cache: "no-cache",
-    });
+    const product = await getProjectBySlug(slug);
 
-    return data;
+    return product;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -23,11 +21,9 @@ const getSingleProjectBySlug = async (slug: string) => {
 
 const getOtherProjects = async () => {
   try {
-    const { data } = await fetchApiData<DbProject[]>("/projects?limit=3", {
-      cache: "no-cache",
-    });
+    const projects = await getAllProjects("3");
 
-    return data;
+    return projects;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -52,7 +48,7 @@ const page = async ({ params }: ProjectProps) => {
     return null;
   }
 
-  const tags = project.tags.split(",");
+  const tags = project.tags ? project.tags.split(",") : [];
 
   const getTotalWeeks = (start: string, end: string) => {
     const startDate = new Date(start);
@@ -98,10 +94,18 @@ const page = async ({ params }: ProjectProps) => {
                 {format(new Date(project.start_date), "MMM, yyyy")} -{" "}
                 {format(new Date(project.end_date), "MMM, yyyy")}
               </span>
-              {getTotalWeeks(project.start_date, project.end_date) > 1 && (
+              {getTotalWeeks(
+                String(project.start_date),
+                String(project.end_date)
+              ) > 1 && (
                 <span>
                   {" "}
-                  ({getTotalWeeks(project.start_date, project.end_date)} weeks)
+                  (
+                  {getTotalWeeks(
+                    String(project.start_date),
+                    String(project.end_date)
+                  )}{" "}
+                  weeks)
                 </span>
               )}
             </div>
@@ -135,7 +139,7 @@ const page = async ({ params }: ProjectProps) => {
                 title={project.title}
                 cover_image={project.cover_image}
                 id={project.id}
-                tags={project.tags}
+                tags={`${project.tags}`}
                 project_link={project.project_link}
                 start_date={project.start_date}
                 end_date={project.end_date}

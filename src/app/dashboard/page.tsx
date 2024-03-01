@@ -2,16 +2,12 @@ import Link from "next/link";
 import { VscArrowRight } from "react-icons/vsc";
 import ProjectCard from "@/components/ProjectCard";
 import Title from "@/components/shared/Typography/Title";
+import { getAllProjects } from "@/backend/model/projects";
 
 const getProjects = async () => {
-  const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const res = await fetch(`${host}/api/projects?limit=3`, {
-      cache: "no-cache",
-      next: { tags: ["projects"] },
-    });
-    const data = await res.json();
-    return data.data as DbProject[];
+    const projects = await getAllProjects("3");
+    return projects;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -39,10 +35,10 @@ const Dashboard = async () => {
               id={project.id}
               title={project.title}
               slug={project.slug}
-              subtitle={project.subtitle}
+              subtitle={project.subtitle ?? ""}
               cover_image={project.cover_image}
               project_link={project.project_link}
-              tags={project.tags}
+              tags={project.tags ?? ""}
               start_date={project.start_date}
               end_date={project.end_date}
             />
