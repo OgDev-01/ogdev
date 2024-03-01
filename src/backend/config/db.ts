@@ -9,10 +9,7 @@ if (!process.env.DATABASE_URL) {
   throw new Error("process.env.DATABASE_URL was missing");
 }
 
-const url = new URL(process.env.DATABASE_URL);
-url.searchParams.set("sslmode", "require");
-
-const dbConnectionString = url.toString();
+const dbConnectionString = process.env.DATABASE_URL;
 const sql = neon(dbConnectionString);
 
 export const db = drizzle(sql, { schema });
