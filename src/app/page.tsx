@@ -5,21 +5,21 @@ import Link from "next/link";
 
 import HeroSection from "@/components/HeroSection/HeroSection";
 import Title from "@/components/shared/Typography/Title";
-// import ProjectCard from "@/components/ProjectCard";
-// import { truncateString } from "@/libs/utils";
+import ProjectCard from "@/components/ProjectCard";
+import { truncateString } from "@/libs/utils";
 import BlogCard from "@/components/BlogCard";
 import { fetchApiData } from "@/libs/helpers/fetcher";
-// import { getAllProjects } from "@/backend/model/projects";
+import { getAllProjects } from "@/backend/model/projects";
 
-// const getProjects = async () => {
-//   try {
-//     const projects = await getAllProjects("3");
-//     return projects;
-//   } catch (error) {
-//     //eslint-disable-next-line no-console
-//     console.log(error);
-//   }
-// };
+const getProjects = async () => {
+  try {
+    const projects = await getAllProjects("3");
+    return projects;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
 const fetchBlogs = async () => {
   try {
     const res = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
@@ -33,7 +33,7 @@ const fetchBlogs = async () => {
 };
 
 export default async function Home() {
-  // const projects = await getProjects();
+  const projects = await getProjects();
   const blogs = await fetchBlogs();
 
   return (
@@ -46,7 +46,7 @@ export default async function Home() {
             View more <VscArrowRight className="text-2xl" />
           </Link>
         </div>
-        {/* <div className="flex flex-col mt-8 gap-6">
+        <div className="flex flex-col mt-8 gap-6">
           {projects && projects.length > 0
             ? projects.map((project, idx) => (
                 <ProjectCard
@@ -67,7 +67,7 @@ export default async function Home() {
                 />
               ))
             : null}
-        </div> */}
+        </div>
       </section>
       <section className="container mt-20 overflow-hidden">
         <div className="flex justify-between items-center">
