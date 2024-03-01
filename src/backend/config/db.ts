@@ -8,6 +8,7 @@ neonConfig.fetchConnectionCache = true; // Enable the connection cache
 if (!process.env.DATABASE_URL) {
   throw new Error("process.env.DATABASE_URL was missing");
 }
+
 const url = new URL(process.env.DATABASE_URL);
 url.searchParams.set("sslmode", "require");
 

@@ -54,3 +54,5 @@ const Projects = async ({ searchParams }: ProjectsProps) => {
 };
 
 export default Projects;
+
+export const dynamic = "force-dynamic";

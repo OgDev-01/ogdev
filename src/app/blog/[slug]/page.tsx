@@ -126,3 +126,5 @@ const BlogDetails = async ({ params }: BlogDetailsProps) => {
 };
 
 export default BlogDetails;
+
+export const dynamic = "force-dynamic";
