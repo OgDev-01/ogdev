@@ -40,15 +40,16 @@ export default async function Home() {
     <main className="w-full">
       <HeroSection />
       <section className="container mt-20">
-        <div className="flex justify-between items-center">
-          <Title level={3}>Projects</Title>
-          <Link className="flex items-center gap-2" href="/projects">
-            View more <VscArrowRight className="text-2xl" />
-          </Link>
-        </div>
-        <div className="flex flex-col mt-8 gap-6">
-          {projects && projects.length > 0
-            ? projects.map((project, idx) => (
+        {projects && projects.length > 0 && (
+          <>
+            <div className="flex justify-between items-center">
+              <Title level={3}>Projects</Title>
+              <Link className="flex items-center gap-2" href="/projects">
+                View more <VscArrowRight className="text-2xl" />
+              </Link>
+            </div>
+            <div className="flex flex-col mt-8 gap-6">
+              {projects.map((project, idx) => (
                 <ProjectCard
                   key={idx}
                   id={project.id}
@@ -65,9 +66,10 @@ export default async function Home() {
                   start_date={project.start_date}
                   end_date={project.end_date}
                 />
-              ))
-            : null}
-        </div>
+              ))}
+            </div>
+          </>
+        )}
       </section>
       <section className="container mt-20 overflow-hidden">
         <div className="flex justify-between items-center">
