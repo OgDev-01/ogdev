@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { BsArrowUpRightCircle } from "react-icons/bs";
@@ -7,6 +8,52 @@ import MarkdownRenderer from "@/components/MarkdownRenderer";
 import ProjectCard from "@/components/ProjectCard";
 import Text from "@/components/shared/Typography/Text";
 import { getAllProjects, getProjectBySlug } from "@/backend/model/projects";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const project = await getProjectBySlug(params.slug);
+  if (!project) {
+    return {
+      title: "Page not found",
+      description: "The page you are looking for does not exist",
+    };
+  }
+  return {
+    title: project.title,
+    description: project.subtitle,
+    openGraph: {
+      images: project.cover_image,
+      title: project.title,
+      description: project.subtitle ?? "",
+      url: project.project_link,
+      type: "article",
+      publishedTime: `${project.created_at}`,
+      siteName: "Ogbonna Sunday",
+    },
+    twitter: {
+      card: "summary_large_image",
+      creator: "ogbonna_sunday",
+      title: `${project.title} | Ogbonna Sunday`,
+      description: project.subtitle ?? "",
+      images: {
+        url: project.cover_image,
+        alt: `Cover image for ${project.title}`,
+      },
+    },
+    keywords: [
+      `${project.tags}`,
+      project.title,
+      `${project.subtitle}`,
+      project.slug,
+    ],
+    alternates: {
+      canonical: project.project_link,
+    },
+  };
+}
 
 const getSingleProjectBySlug = async (slug: string) => {
   try {
@@ -44,9 +91,7 @@ const page = async ({ params }: ProjectProps) => {
     ? otherProjects.filter((project) => project.slug !== slug).slice(0, 1)
     : [];
 
-  if (!project) {
-    return null;
-  }
+  if (!project) notFound();
 
   const tags = project.tags ? project.tags.split(",") : [];
 

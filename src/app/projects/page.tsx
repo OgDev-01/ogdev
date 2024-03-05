@@ -1,6 +1,11 @@
 import ProjectCard from "@/components/ProjectCard";
 import { getAllProjects } from "@/backend/model/projects";
 
+export const metadata = {
+  title: "Projects",
+  description: "Curation of all the projects I have worked on",
+};
+
 interface ProjectsProps {
   searchParams: { limit?: string };
 }

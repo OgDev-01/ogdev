@@ -1,12 +1,16 @@
+import { getAllBlogs } from "@/backend/model/blogs";
 import BlogCard from "@/components/BlogCard";
-import { fetchApiData } from "@/libs/helpers/fetcher";
+
+export const metadata = {
+  title: "Blogs",
+  description: "A collection of my personal blogs",
+};
 
 const fetchBlogs = async () => {
   try {
-    const { data } = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
-      cache: "no-cache",
-    });
-    return data;
+    const res = getAllBlogs({});
+
+    return res;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);

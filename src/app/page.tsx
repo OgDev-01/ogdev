@@ -8,8 +8,8 @@ import Title from "@/components/shared/Typography/Title";
 import ProjectCard from "@/components/ProjectCard";
 import { truncateString } from "@/libs/utils";
 import BlogCard from "@/components/BlogCard";
-import { fetchApiData } from "@/libs/helpers/fetcher";
 import { getAllProjects } from "@/backend/model/projects";
+import { getAllBlogs } from "@/backend/model/blogs";
 
 const getProjects = async () => {
   try {
@@ -22,10 +22,9 @@ const getProjects = async () => {
 };
 const fetchBlogs = async () => {
   try {
-    const res = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
-      cache: "no-cache",
-    });
-    return res.data;
+    const res = getAllBlogs({ limit: "3" });
+
+    return res;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
