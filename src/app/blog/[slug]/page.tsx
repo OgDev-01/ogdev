@@ -49,13 +49,7 @@ export async function generateMetadata({
         alt: `Cover image for ${blog.title}`,
       },
     },
-    keywords: [
-      blog.tag_list.join(", "),
-      blog.title,
-      blog.description,
-      blog.slug,
-      blog.user.name,
-    ],
+    keywords: [blog.title, blog.description, blog.slug, blog.user.name],
     alternates: {
       canonical: blog.canonical_url,
     },
