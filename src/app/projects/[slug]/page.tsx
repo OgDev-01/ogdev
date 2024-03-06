@@ -55,6 +55,11 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  const projects = await getAllProjects();
+  return projects.map(({ slug }) => ({ params: { slug } }));
+}
+
 const getSingleProjectBySlug = async (slug: string) => {
   try {
     const product = await getProjectBySlug(slug);

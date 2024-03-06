@@ -7,12 +7,12 @@ import { InsertProject, projects } from "../config/schema";
 import { slugifyText } from "../utils/slugify";
 import { validateProject } from "../utils/validateProject";
 
-export async function getAllProjects(limit: string) {
+export async function getAllProjects(limit?: string) {
   const projectsArray = await db
     .select()
     .from(projects)
     .where(sql`${projects.deleted_at} IS NULL`)
-    .limit(parseInt(limit))
+    .limit(parseInt(limit ?? "10"))
     .orderBy(sql`created_at DESC`);
 
   return projectsArray;
