@@ -16,6 +16,7 @@ import Provider from "./theme-provider";
 const chivoMono = Chivo_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ogbonna.dev"),
   title: {
     default: "Ogbonna Sunday",
     template: `%s | Ogbonna Sunday`,
@@ -35,6 +36,14 @@ export const metadata: Metadata = {
     "PWA Developer",
     "Web Developer",
     "Frontend Developer",
+    "Open Source Developer",
+    "Tech Blogger",
+    "Technical Writer",
+    "Javascript",
+    "React",
+    "Next.js",
+    "Typescript",
+    "Node.js",
   ],
   referrer: "origin-when-cross-origin",
   robots: {
