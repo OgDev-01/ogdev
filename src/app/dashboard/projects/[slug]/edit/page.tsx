@@ -1,10 +1,13 @@
 import Form from "@/app/dashboard/Form";
-import { getProjectBySlug } from "@/backend/model/projects";
 
 const getSingleProject = async (slug: string) => {
+  const host = process.env.NEXT_PUBLIC_URL_HOST;
   try {
-    const project = await getProjectBySlug(slug);
-    return project;
+    const res = await fetch(`${host}/api/projects/${slug}`, {
+      cache: "no-cache",
+    });
+    const data = await res.json();
+    return data.data as DbProject;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -40,12 +43,12 @@ const page = async ({ params }: PageProps) => {
       <Form
         defaultValues={{
           title,
-          subtitle: subtitle ?? "",
+          subtitle,
           content,
-          start_date: String(start_date),
-          end_date: String(end_date),
+          start_date,
+          end_date,
           cover_image,
-          tags: tags ?? "",
+          tags,
           project_link,
           slug,
         }}

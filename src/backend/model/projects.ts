@@ -7,15 +7,23 @@ import { InsertProject, projects } from "../config/schema";
 import { slugifyText } from "../utils/slugify";
 import { validateProject } from "../utils/validateProject";
 
-export async function getAllProjects(limit?: string) {
+export async function getAllProjects(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const limit = searchParams.get("limit") ?? "10";
+
   const projectsArray = await db
     .select()
     .from(projects)
     .where(sql`${projects.deleted_at} IS NULL`)
-    .limit(parseInt(limit ?? "10"))
+    .limit(parseInt(limit))
     .orderBy(sql`created_at DESC`);
 
-  return projectsArray;
+  return NextResponse.json(
+    {
+      data: projectsArray,
+    },
+    { status: 200 }
+  );
 }
 
 export async function createProject(req: NextRequest, res: NextResponse) {
@@ -79,13 +87,26 @@ export async function getProjectById({ params }: { params: { id: string } }) {
   );
 }
 
-export async function getProjectBySlug(slug: string) {
+export async function getProjectBySlug({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const slug = params.slug;
+  if (!slug) {
+    return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+  }
+
   const project = await db
     .select()
     .from(projects)
     .where(sql`${projects.slug} = ${slug} AND ${projects.deleted_at} IS NULL`);
 
-  return project[0];
+  if (!project) {
+    return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ data: project[0] }, { status: 200 });
 }
 
 export async function updateProject(

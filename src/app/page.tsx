@@ -8,13 +8,14 @@ import Title from "@/components/shared/Typography/Title";
 import ProjectCard from "@/components/ProjectCard";
 import { truncateString } from "@/libs/utils";
 import BlogCard from "@/components/BlogCard";
-import { getAllProjects } from "@/backend/model/projects";
-import { getAllBlogs } from "@/backend/model/blogs";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getProjects = async () => {
   try {
-    const projects = await getAllProjects("3");
-    return projects;
+    const res = await fetchApiData<DbProject[]>("/projects?limit=3", {
+      cache: "no-cache",
+    });
+    return res.data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -22,9 +23,10 @@ const getProjects = async () => {
 };
 const fetchBlogs = async () => {
   try {
-    const res = getAllBlogs({ limit: "3" });
-
-    return res;
+    const res = await fetchApiData<DEVBlogs[]>("/blogs?limit=3", {
+      cache: "no-cache",
+    });
+    return res.data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -39,16 +41,15 @@ export default async function Home() {
     <main className="w-full">
       <HeroSection />
       <section className="container mt-20">
-        {projects && projects.length > 0 && (
-          <>
-            <div className="flex justify-between items-center">
-              <Title level={3}>Projects</Title>
-              <Link className="flex items-center gap-2" href="/projects">
-                View more <VscArrowRight className="text-2xl" />
-              </Link>
-            </div>
-            <div className="flex flex-col mt-8 gap-6">
-              {projects.map((project, idx) => (
+        <div className="flex justify-between items-center">
+          <Title level={3}>Projects</Title>
+          <Link className="flex items-center gap-2" href="/projects">
+            View more <VscArrowRight className="text-2xl" />
+          </Link>
+        </div>
+        <div className="flex flex-col mt-8 gap-6">
+          {projects && projects.length > 0
+            ? projects.map((project, idx) => (
                 <ProjectCard
                   key={idx}
                   id={project.id}
@@ -57,7 +58,7 @@ export default async function Home() {
                       ? truncateString(project.title, 50)
                       : project.title
                   }
-                  tags={project.tags ?? ""}
+                  tags={project.tags}
                   slug={project.slug}
                   cover_image={project.cover_image}
                   content={project.content}
@@ -65,10 +66,9 @@ export default async function Home() {
                   start_date={project.start_date}
                   end_date={project.end_date}
                 />
-              ))}
-            </div>
-          </>
-        )}
+              ))
+            : null}
+        </div>
       </section>
       <section className="container mt-20 overflow-hidden">
         <div className="flex justify-between items-center">

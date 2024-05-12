@@ -1,25 +1,20 @@
 import ProjectCard from "@/components/ProjectCard";
-import { getAllProjects } from "@/backend/model/projects";
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
-export const metadata = {
-  title: "Projects",
-  description: "Curation of all the projects I have worked on",
+const getAllProjects = async () => {
+  const host = process.env.NEXT_PUBLIC_URL_HOST;
+  try {
+    const res = await fetchApiData<DbProject[]>(`/projects`, {
+      cache: "no-cache",
+    });
+    return res.data;
+  } catch (error) {
+    //eslint-disable-next-line no-console
+    console.log(error);
+  }
 };
-
-interface ProjectsProps {
-  searchParams: { limit?: string };
-}
-const Projects = async ({ searchParams }: ProjectsProps) => {
-  const getprojects = async () => {
-    try {
-      return await getAllProjects(searchParams.limit ?? "10");
-    } catch (e) {
-      //eslint-disable-next-line no-console
-      console.log(e);
-    }
-  };
-
-  const projects = await getprojects();
+const Projects = async () => {
+  const projects = await getAllProjects();
 
   return (
     <div className="container flex flex-col gap-6">
@@ -42,7 +37,7 @@ const Projects = async ({ searchParams }: ProjectsProps) => {
           <ProjectCard
             key={idx}
             title={title}
-            subtitle={`${subtitle}`}
+            subtitle={subtitle}
             slug={slug}
             content={content}
             cover_image={cover_image}
@@ -50,7 +45,7 @@ const Projects = async ({ searchParams }: ProjectsProps) => {
             end_date={end_date}
             project_link={project_link}
             id={id}
-            tags={`${tags}`}
+            tags={tags}
           />
         )
       )}
@@ -59,5 +54,3 @@ const Projects = async ({ searchParams }: ProjectsProps) => {
 };
 
 export default Projects;
-
-export const dynamic = "force-dynamic";

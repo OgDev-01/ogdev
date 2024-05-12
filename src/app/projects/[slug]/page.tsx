@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import { HiOutlineCalendar } from "react-icons/hi";
 import { BsArrowUpRightCircle } from "react-icons/bs";
@@ -7,59 +6,15 @@ import Title from "@/components/shared/Typography/Title";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import ProjectCard from "@/components/ProjectCard";
 import Text from "@/components/shared/Typography/Text";
-import { getAllProjects, getProjectBySlug } from "@/backend/model/projects";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const project = await getProjectBySlug(params.slug);
-  if (!project) {
-    return {
-      title: "Page not found",
-      description: "The page you are looking for does not exist",
-    };
-  }
-  return {
-    title: project.title,
-    description: project.subtitle,
-    openGraph: {
-      images: project.cover_image,
-      title: project.title,
-      description: project.subtitle ?? "",
-      url: project.project_link,
-      type: "article",
-      publishedTime: `${project.created_at}`,
-      siteName: "Ogbonna Sunday",
-    },
-    twitter: {
-      card: "summary_large_image",
-      creator: "ogbonna_sunday",
-      title: `${project.title} | Ogbonna Sunday`,
-      description: project.subtitle ?? "",
-      images: {
-        url: project.cover_image,
-        alt: `Cover image for ${project.title}`,
-      },
-    },
-    keywords: [
-      `${project.tags}`,
-      project.title,
-      `${project.subtitle}`,
-      project.slug,
-    ],
-    alternates: {
-      canonical: project.project_link,
-    },
-  };
-}
+import { fetchApiData } from "@/libs/helpers/fetcher";
 
 const getSingleProjectBySlug = async (slug: string) => {
   try {
-    const product = await getProjectBySlug(slug);
+    const { data } = await fetchApiData<DbProject>(`/projects/${slug}`, {
+      cache: "no-cache",
+    });
 
-    return product;
+    return data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -68,9 +23,11 @@ const getSingleProjectBySlug = async (slug: string) => {
 
 const getOtherProjects = async () => {
   try {
-    const projects = await getAllProjects("3");
+    const { data } = await fetchApiData<DbProject[]>("/projects?limit=3", {
+      cache: "no-cache",
+    });
 
-    return projects;
+    return data;
   } catch (error) {
     //eslint-disable-next-line no-console
     console.log(error);
@@ -91,9 +48,11 @@ const page = async ({ params }: ProjectProps) => {
     ? otherProjects.filter((project) => project.slug !== slug).slice(0, 1)
     : [];
 
-  if (!project) notFound();
+  if (!project) {
+    return null;
+  }
 
-  const tags = project.tags ? project.tags.split(",") : [];
+  const tags = project.tags.split(",");
 
   const getTotalWeeks = (start: string, end: string) => {
     const startDate = new Date(start);
@@ -139,18 +98,10 @@ const page = async ({ params }: ProjectProps) => {
                 {format(new Date(project.start_date), "MMM, yyyy")} -{" "}
                 {format(new Date(project.end_date), "MMM, yyyy")}
               </span>
-              {getTotalWeeks(
-                String(project.start_date),
-                String(project.end_date)
-              ) > 1 && (
+              {getTotalWeeks(project.start_date, project.end_date) > 1 && (
                 <span>
                   {" "}
-                  (
-                  {getTotalWeeks(
-                    String(project.start_date),
-                    String(project.end_date)
-                  )}{" "}
-                  weeks)
+                  ({getTotalWeeks(project.start_date, project.end_date)} weeks)
                 </span>
               )}
             </div>
@@ -184,7 +135,7 @@ const page = async ({ params }: ProjectProps) => {
                 title={project.title}
                 cover_image={project.cover_image}
                 id={project.id}
-                tags={`${project.tags}`}
+                tags={project.tags}
                 project_link={project.project_link}
                 start_date={project.start_date}
                 end_date={project.end_date}

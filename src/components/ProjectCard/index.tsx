@@ -13,8 +13,8 @@ interface ProjectCardProps {
   cover_image: string;
   content?: string;
   project_link: string;
-  start_date: Date;
-  end_date: Date;
+  start_date: string;
+  end_date: string;
   tags?: string;
   isEditable?: boolean;
 }
