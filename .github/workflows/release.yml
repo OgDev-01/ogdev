@@ -45,7 +45,8 @@ jobs:
 
       - name: "🚀 release"
         id: semantic-release
-        uses: medijobs/release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npx semantic-release
