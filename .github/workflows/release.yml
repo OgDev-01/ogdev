@@ -49,4 +49,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npx semantic-release
+          nvm install 'lts/*' && npx semantic-release
