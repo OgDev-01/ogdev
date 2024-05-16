@@ -16,7 +16,7 @@
     "format": "next lint -- --fix --dir ."
   },
   "engines": {
-    "node": ">=21",
+    "node": ">=18.0.0",
     "npm": ">=8"
   },
   "dependencies": {
