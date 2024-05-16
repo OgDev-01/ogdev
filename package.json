@@ -15,6 +15,10 @@
     "lint": "next lint",
     "format": "next lint -- --fix --dir ."
   },
+  "engines": {
+    "node": ">=21",
+    "npm": ">=8"
+  },
   "dependencies": {
     "@clerk/nextjs": "^4.29.5",
     "@formspree/react": "^2.5.1",
