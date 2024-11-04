@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.1.0-beta.1](https://github.com/OgDev-01/ogdev/compare/v1.0.0...v1.1.0-beta.1) (2024-11-04)
+
+
+### 🍕 Features
+
+* use built in release ([#31](https://github.com/OgDev-01/ogdev/issues/31)) ([3e2977c](https://github.com/OgDev-01/ogdev/commit/3e2977cb10c9b11b63345723cd0e8c3c8b118b8d))
+
+
+### 🐛 Bug Fixes
+
+* add nvm to set version to latest ([86d5e4d](https://github.com/OgDev-01/ogdev/commit/86d5e4dc861b98717d1b5f3fa9ea40916cba20f7))
+* build error with clerk ([719a04b](https://github.com/OgDev-01/ogdev/commit/719a04b95065d87b8363373bbfb1d4677fbdeb82))
+* remove nvm command ([40d799f](https://github.com/OgDev-01/ogdev/commit/40d799f157bc8e02dc1d93b1c98d7ec71dc0ad3a))
+* resolve inconsistency with node version ([#32](https://github.com/OgDev-01/ogdev/issues/32)) ([61a363c](https://github.com/OgDev-01/ogdev/commit/61a363c46a2d7c5af597e1aff8ee6e0a5b62f4a0))
+
 ## [1.0.0-beta.3](https://github.com/OgDev-01/ogdev/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2024-11-04)
 
 
