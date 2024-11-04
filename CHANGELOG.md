@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [1.0.0-beta.3](https://github.com/OgDev-01/ogdev/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2024-11-04)
+
+
+### 🐛 Bug Fixes
+
+* build error with clerk ([719a04b](https://github.com/OgDev-01/ogdev/commit/719a04b95065d87b8363373bbfb1d4677fbdeb82))
+
 ## [1.0.0-beta.2](https://github.com/OgDev-01/ogdev/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2024-05-16)
 
 
