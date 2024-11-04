@@ -1,20 +1,24 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default authMiddleware({
-  publicRoutes: [
-    "/",
-    "/api/webhooks(.*)",
-    "/api/users(.*)",
-    "/api/blogs(.*)",
-    "/api/projects(.*)",
-    "/projects(.*)",
-    "/blog(.*)",
-    "blogs(.*)",
-    "/about",
-    "/contact",
-    "/snippets",
-    "/__nextjs_original-stack-frame",
-  ],
+const publicRoutes = createRouteMatcher([
+  "/",
+  "/api/webhooks(.*)",
+  "/api/users(.*)",
+  "/api/blogs(.*)",
+  "/api/projects(.*)",
+  "/projects(.*)",
+  "/blog(.*)",
+  "blogs(.*)",
+  "/about",
+  "/contact",
+  "/snippets",
+  "/__nextjs_original-stack-frame",
+]);
+
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, redirectToSignIn } = await auth();
+  if (publicRoutes(req)) userId;
+  if (!userId && !publicRoutes(req)) redirectToSignIn();
 });
 
 export const config = {
