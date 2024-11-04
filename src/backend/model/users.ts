@@ -37,7 +37,9 @@ export async function updateUserPartial(
   const formData = await req.formData();
   const data = Object.fromEntries(formData);
 
-  const clerkUser = await clerkClient.users.updateUser(id, data);
+  const clerkUser = await (
+    await clerkClient()
+  ).users.updateUserMetadata(id, data);
 
   return NextResponse.json(clerkUser, { status: 200 });
 }

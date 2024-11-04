@@ -16,13 +16,13 @@ export const companies: CompanyObject[] = [
     name: "Vessel Labs",
     role: "Frontend Lead",
     date: "2023",
-    link: "https://vessel-labs.com",
+    link: "https://www.linkedin.com/company/vessel-labs",
   },
   {
     name: "Softkodes LLC",
     role: "Frontend Web Developer",
     date: "2020 - 2021",
-    link: "https://softkodesllc.com",
+    link: "https://www.softkodes.com/",
   },
   {
     name: "Warri Innovation Hub",

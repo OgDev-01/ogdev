@@ -104,10 +104,10 @@ export default async function Home() {
         </Title>
         <a
           rel="noreferral"
-          href="mailto:hello@ogbonna.dev"
+          href="mailto:sunday@ogbonna.dev"
           className="text-2xl md:text-5xl flex text-primary-button font-semibold mt-10 items-center gap-6"
         >
-          Hello@ogbonna.dev <BsArrowUpRightCircle />
+          Sunday@ogbonna.dev <BsArrowUpRightCircle />
         </a>
       </div>
     </main>
