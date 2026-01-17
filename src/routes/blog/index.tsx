@@ -100,7 +100,7 @@ function Blogs() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: `${blog.slug}_${blog.id}` }}
-                className="group block rounded-lg border border-secondary-black/10 p-4 transition-colors hover:bg-secondary-black/[0.03] dark:border-primary-white/10 dark:hover:bg-primary-white/[0.03]"
+                className="group block rounded-lg p-4 transition-colors hover:bg-secondary-black/[0.03] dark:hover:bg-primary-white/[0.03]"
               >
                 <div className="mb-2 flex items-center gap-3 text-sm text-secondary-black/60 dark:text-primary-white/60">
                   <span>{format(new Date(blog.published_at), "MMM yyyy")}</span>
@@ -109,13 +109,15 @@ function Blogs() {
                     {blog.reading_time_minutes} min
                   </span>
                 </div>
-                <h2 className="font-medium leading-snug text-secondary-black transition-colors group-hover:text-primary-button dark:text-primary-white dark:group-hover:text-secondary-button">
-                  {blog.title}
+                <div className="flex items-start justify-between gap-3">
+                  <h2 className="font-medium leading-snug text-secondary-black transition-colors group-hover:text-primary-button dark:text-primary-white dark:group-hover:text-secondary-button">
+                    {blog.title}
+                  </h2>
                   <FiArrowUpRight
-                    className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    className="mt-1 h-4 w-4 shrink-0 text-secondary-black/40 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary-button dark:text-primary-white/40 dark:group-hover:text-secondary-button"
                     aria-hidden="true"
                   />
-                </h2>
+                </div>
               </Link>
             </li>
           ))}
