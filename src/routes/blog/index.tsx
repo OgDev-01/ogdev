@@ -100,7 +100,7 @@ function Blogs() {
               <Link
                 to="/blog/$slug"
                 params={{ slug: `${blog.slug}_${blog.id}` }}
-                className="group block rounded-lg p-4 transition-colors hover:bg-secondary-black/[0.03] dark:hover:bg-primary-white/[0.03]"
+                className="group block py-4"
               >
                 <div className="mb-2 flex items-center gap-3 text-sm text-secondary-black/60 dark:text-primary-white/60">
                   <span>{format(new Date(blog.published_at), "MMM yyyy")}</span>
