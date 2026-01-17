@@ -62,7 +62,7 @@ function generateSitemapXml(blogs: DevToBlog[]): string {
   const blogEntries = blogs
     .map(
       (blog) => `  <url>
-    <loc>${SITE_URL}/blog/${blog.id}</loc>
+    <loc>${SITE_URL}/blog/${blog.slug}_${blog.id}</loc>
     <lastmod>${formatDate(blog.published_at)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -16,7 +16,7 @@ const SITE_NAME = "Sunday Ogbonna";
 const SITE_TITLE = "Sunday Ogbonna - Software Engineer";
 const SITE_DESCRIPTION =
   "Sunday Ogbonna is a software engineer who builds accessible, pixel-perfect digital experiences for the web and mobile.";
-const SITE_IMAGE = `${SITE_URL}/me.png`;
+const SITE_IMAGE = `${SITE_URL}/og-image.svg`;
 const TWITTER_HANDLE = "@OgDev_01";
 
 export const Route = createRootRoute({
