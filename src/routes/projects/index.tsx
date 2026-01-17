@@ -23,6 +23,21 @@ export const Route = createFileRoute("/projects/")({
           "Featured projects and work by Sunday Ogbonna, including web applications, mobile apps, and open-source contributions.",
       },
       { property: "og:url", content: `${SITE_URL}/projects` },
+      {
+        property: "og:image",
+        content: `${SITE_URL}/og.png?title=Projects&subtitle=Web%20applications%2C%20mobile%20apps%2C%20and%20open-source%20contributions`,
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Projects - Sunday Ogbonna" },
+      {
+        name: "twitter:description",
+        content:
+          "Featured projects and work by Sunday Ogbonna, including web applications, mobile apps, and open-source contributions.",
+      },
+      {
+        name: "twitter:image",
+        content: `${SITE_URL}/og.png?title=Projects&subtitle=Web%20applications%2C%20mobile%20apps%2C%20and%20open-source%20contributions`,
+      },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/projects` }],
   }),

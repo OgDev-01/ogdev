@@ -27,6 +27,21 @@ export const Route = createFileRoute("/blog/")({
           "Articles about web development, React, TypeScript, and software engineering by Sunday Ogbonna.",
       },
       { property: "og:url", content: `${SITE_URL}/blog` },
+      {
+        property: "og:image",
+        content: `${SITE_URL}/og.png?title=Blog&subtitle=Articles%20about%20web%20development%20and%20software%20engineering`,
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Blog - Sunday Ogbonna" },
+      {
+        name: "twitter:description",
+        content:
+          "Articles about web development, React, TypeScript, and software engineering by Sunday Ogbonna.",
+      },
+      {
+        name: "twitter:image",
+        content: `${SITE_URL}/og.png?title=Blog&subtitle=Articles%20about%20web%20development%20and%20software%20engineering`,
+      },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/blog` }],
   }),

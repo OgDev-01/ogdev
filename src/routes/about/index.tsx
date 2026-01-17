@@ -22,6 +22,21 @@ export const Route = createFileRoute("/about/")({
           "Learn more about Sunday Ogbonna, a software engineer with 5+ years of experience building web and mobile applications.",
       },
       { property: "og:url", content: `${SITE_URL}/about` },
+      {
+        property: "og:image",
+        content: `${SITE_URL}/og.png?title=About%20Me&subtitle=Software%20engineer%20with%205%2B%20years%20of%20experience`,
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About - Sunday Ogbonna" },
+      {
+        name: "twitter:description",
+        content:
+          "Learn more about Sunday Ogbonna, a software engineer with 5+ years of experience building web and mobile applications.",
+      },
+      {
+        name: "twitter:image",
+        content: `${SITE_URL}/og.png?title=About%20Me&subtitle=Software%20engineer%20with%205%2B%20years%20of%20experience`,
+      },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
   }),
