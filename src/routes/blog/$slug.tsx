@@ -214,7 +214,7 @@ function BlogDetails() {
                 {filteredBlogs.map((post) => (
                   <tr
                     key={post.id}
-                    className="border-b border-secondary-black/5 transition-colors last:border-b-0 hover:bg-secondary-black/5 dark:border-primary-white/5 dark:hover:bg-primary-white/5"
+                    className="border-b border-secondary-black/5 transition-colors last:border-b-0 hover:bg-secondary-black/[0.03] dark:border-primary-white/5 dark:hover:bg-primary-white/[0.03]"
                   >
                     {/* Date */}
                     <td className="py-3 pr-6 align-top text-sm text-secondary-black/50 dark:text-primary-white/50">

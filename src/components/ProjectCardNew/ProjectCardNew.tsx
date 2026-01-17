@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { FiArrowUpRight } from "react-icons/fi";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 import { cn } from "@/libs/utils";
 
@@ -12,6 +13,7 @@ interface ProjectCardNewProps {
 
 function ProjectCardNew({ project, className }: ProjectCardNewProps) {
   const isExternal = project.link.startsWith("http");
+  const isMobileApp = project.appStore?.ios || project.appStore?.android;
 
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isExternal) {
@@ -39,7 +41,7 @@ function ProjectCardNew({ project, className }: ProjectCardNewProps) {
       <div className="group relative grid gap-4 pb-1 transition-all duration-300 ease-out sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
         {/* Hover background overlay - Desktop only */}
         <div
-          className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition-all duration-300 ease-out motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-secondary-black/5 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg dark:lg:group-hover:bg-primary-white/5"
+          className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition-all duration-300 ease-out motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-secondary-black/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg dark:lg:group-hover:bg-primary-white/[0.03]"
           aria-hidden="true"
         />
 
@@ -78,6 +80,36 @@ function ProjectCardNew({ project, className }: ProjectCardNewProps) {
           <p className="mt-2 text-sm leading-normal text-secondary-black/70 dark:text-primary-white/70">
             {project.description}
           </p>
+
+          {/* App Store Links */}
+          {isMobileApp && (
+            <div className="relative z-20 mt-3 flex items-center gap-2">
+              {project.appStore?.ios && (
+                <a
+                  href={project.appStore.ios}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-full bg-secondary-black/10 px-3 py-1 text-xs font-medium leading-5 text-secondary-black/80 transition-colors hover:bg-secondary-black/20 hover:text-secondary-black dark:bg-primary-white/10 dark:text-primary-white/80 dark:hover:bg-primary-white/20 dark:hover:text-primary-white"
+                  aria-label={`Download ${project.title} on iOS App Store`}
+                >
+                  <FaApple className="h-3 w-3" />
+                  iOS
+                </a>
+              )}
+              {project.appStore?.android && (
+                <a
+                  href={project.appStore.android}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-full bg-secondary-black/10 px-3 py-1 text-xs font-medium leading-5 text-secondary-black/80 transition-colors hover:bg-secondary-black/20 hover:text-secondary-black dark:bg-primary-white/10 dark:text-primary-white/80 dark:hover:bg-primary-white/20 dark:hover:text-primary-white"
+                  aria-label={`Download ${project.title} on Google Play Store`}
+                >
+                  <FaGooglePlay className="h-2.5 w-2.5" />
+                  Android
+                </a>
+              )}
+            </div>
+          )}
 
           {/* Tech pills */}
           <ul

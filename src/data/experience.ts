@@ -71,18 +71,38 @@ export type Project = {
   featured: boolean;
   year: string;
   madeAt?: string;
+  // Mobile app specific links
+  appStore?: {
+    ios?: string;
+    android?: string;
+  };
 };
 
 export const projects: Project[] = [
+  {
+    title: "Zed REST Client",
+    description:
+      "A powerful HTTP client extension for Zed editor that brings professional API testing directly into your workflow. Features include request chaining, environment management, GraphQL support, and code generation.",
+    technologies: ["Rust", "WebAssembly", "LSP", "Tree-sitter"],
+    link: "https://github.com/OgDev-01/zed-restclient",
+    github: "https://github.com/OgDev-01/zed-restclient",
+    featured: true,
+    year: "2025",
+  },
   {
     title: "Tire Spot Solutions",
     description:
       "A comprehensive automotive service app combining customer membership, service scheduling, e-commerce, and roadside assistance in one platform. Led mobile development with focus on user convenience and reliability.",
     technologies: ["React Native", "Expo", "TypeScript", "Node.js"],
-    link: "#",
+    link: "https://tirespotsolutions.com",
     featured: true,
     year: "2024",
     madeAt: "Freelance",
+    appStore: {
+      ios: "https://apps.apple.com/us/app/tire-spot/id6746969376",
+      android:
+        "https://play.google.com/store/apps/details?id=com.tirespotsolutions",
+    },
   },
   {
     title: "Golivwell App",
@@ -93,6 +113,24 @@ export const projects: Project[] = [
     featured: true,
     year: "2024",
     madeAt: "Golivwell Inc",
+    appStore: {
+      ios: "https://apps.apple.com/us/app/golivwell-client/id6670273595",
+      android: "https://play.google.com/store/apps/details?id=com.livwellinc",
+    },
+  },
+  {
+    title: "LifeLab App",
+    description:
+      "A white-label wellness application powered by Golivwell's platform, offering custom branding for fitness and wellness businesses. Built as a customizable solution for partners seeking their own branded client experience.",
+    technologies: ["React Native", "TypeScript", "Expo", "White-label"],
+    link: "https://golivwell.com",
+    featured: true,
+    year: "2024",
+    madeAt: "Golivwell Inc",
+    appStore: {
+      ios: "https://apps.apple.com/us/app/lifelab-client/id6751045169",
+      android: "https://play.google.com/store/apps/details?id=com.lifelabinc",
+    },
   },
   {
     title: "Medijobs Platform",
@@ -135,25 +173,6 @@ export const projects: Project[] = [
     featured: false,
     year: "2023",
     madeAt: "Vessel Labs",
-  },
-  {
-    title: "Portfolio Website v2",
-    description:
-      "Personal portfolio and blog website built with TanStack Start, featuring DEV.to integration and dark mode.",
-    technologies: ["TanStack Start", "React 19", "TypeScript", "Tailwind CSS"],
-    link: "https://ogbonna.dev",
-    github: "https://github.com/OgDev-01/ogdev",
-    featured: false,
-    year: "2024",
-  },
-  {
-    title: "Portfolio Website v1",
-    description:
-      "First iteration of personal portfolio built with Next.js and styled-components.",
-    technologies: ["Next.js", "TypeScript", "Styled Components"],
-    link: "https://v1.ogbonna.dev",
-    featured: false,
-    year: "2022",
   },
 ];
 

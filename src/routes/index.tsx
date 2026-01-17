@@ -162,6 +162,7 @@ function Home() {
                   <ol className="group/list">
                     {projects
                       .filter((p) => p.featured)
+                      .slice(0, 3)
                       .map((project, index) => (
                         <FadeIn key={project.title} delay={200 + index * 100}>
                           <ProjectCardNew project={project} />

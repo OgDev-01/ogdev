@@ -112,7 +112,7 @@ function Blogs() {
             {blogs.map((blog) => (
               <tr
                 key={blog.id}
-                className="border-b border-secondary-black/5 transition-colors hover:bg-secondary-black/5 dark:border-primary-white/5 dark:hover:bg-primary-white/5"
+                className="border-b border-secondary-black/5 transition-colors hover:bg-secondary-black/[0.03] dark:border-primary-white/5 dark:hover:bg-primary-white/[0.03]"
               >
                 {/* Date */}
                 <td className="py-4 pl-4 pr-8 align-top text-sm text-secondary-black/60 dark:text-primary-white/60">

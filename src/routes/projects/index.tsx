@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaApple, FaGooglePlay } from "react-icons/fa";
 
 import FadeIn from "@/components/FadeIn/FadeIn";
 import { projects } from "@/data/experience";
@@ -100,7 +100,7 @@ function Projects() {
             {sortedProjects.map((project, index) => (
               <tr
                 key={index}
-                className="border-b border-secondary-black/5 transition-colors hover:bg-secondary-black/5 dark:border-primary-white/5 dark:hover:bg-primary-white/5"
+                className="border-b border-secondary-black/5 transition-colors hover:bg-secondary-black/[0.03] dark:border-primary-white/5 dark:hover:bg-primary-white/[0.03]"
               >
                 {/* Year */}
                 <td className="py-4 pl-4 pr-8 align-top text-sm text-secondary-black/60 dark:text-primary-white/60">
@@ -132,34 +132,65 @@ function Projects() {
 
                 {/* Links */}
                 <td className="py-4 align-top">
-                  <div className="flex items-center gap-3">
-                    {project.link && project.link !== "#" && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group/link inline-flex items-center text-sm text-secondary-black/70 transition-colors hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
-                        aria-label={`Visit ${project.title} (opens in new tab)`}
-                      >
-                        <span className="hidden sm:inline">
-                          {new URL(project.link).hostname.replace("www.", "")}
-                        </span>
-                        <FiArrowUpRight
-                          className="ml-1 h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    )}
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-secondary-black/50 transition-colors hover:text-primary-button dark:text-primary-white/50 dark:hover:text-secondary-button"
-                        aria-label={`View ${project.title} on GitHub (opens in new tab)`}
-                      >
-                        <FaGithub className="h-4 w-4" />
-                      </a>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      {project.link && project.link !== "#" && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/link inline-flex items-center text-sm text-secondary-black/70 transition-colors hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                          aria-label={`Visit ${project.title} (opens in new tab)`}
+                        >
+                          <span className="hidden sm:inline">
+                            {new URL(project.link).hostname.replace("www.", "")}
+                          </span>
+                          <FiArrowUpRight
+                            className="ml-1 h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      )}
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-secondary-black/50 transition-colors hover:text-primary-button dark:text-primary-white/50 dark:hover:text-secondary-button"
+                          aria-label={`View ${project.title} on GitHub (opens in new tab)`}
+                        >
+                          <FaGithub className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
+                    {/* App Store Links */}
+                    {(project.appStore?.ios || project.appStore?.android) && (
+                      <div className="flex items-center gap-2">
+                        {project.appStore?.ios && (
+                          <a
+                            href={project.appStore.ios}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full bg-secondary-black/10 px-2 py-0.5 text-xs font-medium text-secondary-black/70 transition-colors hover:bg-secondary-black/20 hover:text-secondary-black dark:bg-primary-white/10 dark:text-primary-white/70 dark:hover:bg-primary-white/20 dark:hover:text-primary-white"
+                            aria-label={`Download ${project.title} on iOS App Store`}
+                          >
+                            <FaApple className="h-2.5 w-2.5" />
+                            iOS
+                          </a>
+                        )}
+                        {project.appStore?.android && (
+                          <a
+                            href={project.appStore.android}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full bg-secondary-black/10 px-2 py-0.5 text-xs font-medium text-secondary-black/70 transition-colors hover:bg-secondary-black/20 hover:text-secondary-black dark:bg-primary-white/10 dark:text-primary-white/70 dark:hover:bg-primary-white/20 dark:hover:text-primary-white"
+                            aria-label={`Download ${project.title} on Google Play Store`}
+                          >
+                            <FaGooglePlay className="h-2 w-2" />
+                            Android
+                          </a>
+                        )}
+                      </div>
                     )}
                   </div>
                 </td>
