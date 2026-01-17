@@ -1,17 +1,13 @@
-"use client";
 import { useEffect, useState } from "react";
 
-import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
-
+import { Link, useLocation } from "@tanstack/react-router";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 
 import { BiMoon } from "react-icons/bi";
 import { LuSunDim } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
-import { usePathname } from "next/navigation";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@/libs/context/theme";
 import { cn } from "@/libs/utils";
 import AppLogo from "../AppLogo/AppLogo";
 import ClientOnly from "../ClientOnly/ClientOnly";
@@ -27,23 +23,28 @@ export const NavLinks = [
 
 const AppNav = () => {
   const [isSticky, setIsSticky] = useState(false);
-  const pathname = usePathname();
+  const location = useLocation();
+  const pathname = location.pathname;
   const [isOpen, setIsOpen] = useState(false);
   const handleToggleDropdown = (value: boolean) => {
     setIsOpen(value);
   };
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 30) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const offset = window.scrollY;
+          setIsSticky(offset > 30);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    document.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       document.removeEventListener("scroll", handleScroll);
@@ -68,36 +69,34 @@ const AppNav = () => {
           role="navigation"
           className="flex items-center justify-between container relative py-4"
         >
-          <Link className="" href="/">
+          <Link className="" to="/">
             <AppLogo />
           </Link>
 
           <div>
             <ul className="hidden md:flex gap-8 items-center">
-              {NavLinks.map(({ label, href }, i) => (
+              {NavLinks.map(({ label, href }) => (
                 <li
                   className={cn(
                     pathname === href
                       ? "border-b border-black/40 dark:border-primary-white/40"
                       : ""
                   )}
-                  key={i}
+                  key={href}
                 >
-                  <Link className={cn(getActiveClass(href))} href={href}>
+                  <Link className={cn(getActiveClass(href))} to={href}>
                     {label}
                   </Link>
                 </li>
               ))}
               <ThemeSwitcher />
-              <UserButton />
             </ul>
           </div>
 
           <div className="flex md:hidden items-center gap-4 md:gap-10">
             <ThemeSwitcher />
-            <UserButton />
             <DropdownMenuPrimitive.Trigger className="focus-visible:outline-none">
-              <HamburguerMenu />
+              <HamburgerMenu />
             </DropdownMenuPrimitive.Trigger>
           </div>
         </nav>
@@ -119,13 +118,13 @@ const AppNav = () => {
                 className="flex flex-col gap-8 mt-4 md:mt-16 items-center"
                 role="menu"
               >
-                {NavLinks.map(({ label, href }, i) => (
+                {NavLinks.map(({ label, href }) => (
                   <DropdownMenuPrimitive.Item
                     className="text-center font-semibold text-base md:text-3xl border-none flex select-none hover:outline-none hover:opacity-50 transition focus-visible:outline-secondary-button"
-                    key={i}
+                    key={href}
                     asChild
                   >
-                    <Link href={href}>{label}</Link>
+                    <Link to={href}>{label}</Link>
                   </DropdownMenuPrimitive.Item>
                 ))}
               </ul>
@@ -149,29 +148,14 @@ const AppNav = () => {
 };
 
 const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
-  const { theme, setTheme } = useTheme();
-
-  if (typeof window === "undefined")
-    return (
-      <button
-        role="theme-switcher"
-        aria-label="Toggle theme"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className={cn(
-          "bg-highlight-grey dark:bg-primary-white/10 p-1.5 md:p-2 rounded-xl",
-          classNames
-        )}
-      >
-        <BiMoon className="text-lg md:text-2xl" />
-      </button>
-    );
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <ClientOnly>
       <button
-        role="theme-switcher"
+        role="button"
         aria-label="Toggle theme"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        onClick={toggleTheme}
         className={cn(
           "bg-highlight-grey dark:bg-primary-white/10 p-1.5 md:p-2 rounded-xl",
           classNames
@@ -187,47 +171,18 @@ const ThemeSwitcher = ({ classNames }: { classNames?: string }) => {
   );
 };
 
-const HamburguerMenu = () => {
+const HamburgerMenu = () => {
   const { theme } = useTheme();
-  if (typeof window === "undefined")
-    return (
-      <>
-        <svg
-          width="30"
-          height="18"
-          viewBox="0 0 30 21"
-          fill="none"
-          className="md:hidden"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect y="0.5" width="30" height="4" rx="2" fill={"#0A0A0A"} />
-          <rect x="10" y="8.5" width="20" height="4" rx="2" fill={"#0A0A0A"} />
-          <rect x="20" y="16.5" width="10" height="4" rx="2" fill={"#0A0A0A"} />
-        </svg>
-        <svg
-          width="55"
-          height="28"
-          viewBox="0 0 65 40"
-          fill="none"
-          className="hidden md:block"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect width="60" height="8" rx="4" fill={"#0A0A0A"} />
-          <rect x="20" y="16" width="40" height="8" rx="4" fill={"#0A0A0A"} />
-          <rect x="40" y="32" width="20" height="8" rx="4" fill={"#0A0A0A"} />
-        </svg>
-      </>
-    );
 
   return (
     <button
-      aria-label="Toggle theme"
-      title="Toggle theme"
+      aria-label="Open menu"
+      title="Open menu"
       className="flex items-center font-bold gap-3"
     >
       <span className="text-base md:text-xl max-md:hidden">Menu</span>
-      {/* Mobile version */}
       <ClientOnly>
+        {/* Mobile version */}
         <svg
           width="30"
           height="18"

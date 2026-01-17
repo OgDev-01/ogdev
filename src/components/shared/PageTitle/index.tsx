@@ -1,11 +1,11 @@
-"use client";
-import { usePathname } from "next/navigation";
+import { useLocation } from "@tanstack/react-router";
+
 import Title from "../Typography/Title";
 
 export const ignoredPaths = ["/", "/sign-in", "/sign-up", "/dashboard"];
 
 const PageTitle = () => {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
   const segments = pathname.split("/");
 
   if (ignoredPaths.includes(pathname) || segments.length > 2) {

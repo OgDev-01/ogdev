@@ -1,8 +1,6 @@
-import { Inter } from "next/font/google";
 import { cn } from "@/libs/utils";
-import TypographyWrapper from "./Wrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+import TypographyWrapper from "./Wrapper";
 
 interface TextProps {
   children: React.ReactNode;
@@ -41,7 +39,7 @@ const Text: React.FC<TextProps> = ({
     if (strong) return "strong";
     if (small) return "small";
     return "p";
-  })() as keyof JSX.IntrinsicElements;
+  })() as keyof React.JSX.IntrinsicElements;
 
   const getTypeClass = (type: string) => {
     if (type === "secondary") return "!text-light-slate-5";
@@ -60,7 +58,7 @@ const Text: React.FC<TextProps> = ({
         underline && "underline",
         strikethrough && "line-through",
         getTypeClass(type),
-        inter.className,
+        "font-inter",
         className
       )}
       {...props}

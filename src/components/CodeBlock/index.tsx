@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { MdContentCopy } from "react-icons/md";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -34,6 +33,7 @@ const CodeBlock = ({ value, language = undefined }: CodeBlockProps) => {
       {!isCopied ? (
         <button
           onClick={() => copyToClipboard(value)}
+          aria-label="Copy code to clipboard"
           className="absolute right-0 p-2 rounded-md opacity-40 hover:opacity-100 transition hover:bg-secondary-black/10"
         >
           <MdContentCopy className="text-xl" />

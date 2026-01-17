@@ -1,13 +1,12 @@
-"use client";
+import { Link } from "@tanstack/react-router";
 
-import Link from "next/link";
 import { NavLinks } from "./AppNav";
 
 const NavLink = () => {
   return (
     <>
-      {NavLinks.map((link, i) => (
-        <Link key={i} href={link.href}>
+      {NavLinks.map((link) => (
+        <Link key={link.href} to={link.href}>
           {link.label}
         </Link>
       ))}

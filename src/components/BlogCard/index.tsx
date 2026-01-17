@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import { HiOutlineBookOpen } from "react-icons/hi";
 import { FiEye } from "react-icons/fi";
 import { format } from "date-fns";
@@ -35,17 +34,17 @@ const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <Link
-      href={`/blog/${slug}_${id}`}
+      to="/blog/$slug"
+      params={{ slug: `${slug}_${id}` }}
       className={cn(
         "rounded-xl p-4 max-w-72 min-w-72 bg-highlight-black text-white flex flex-col gap-3"
       )}
     >
       <div className="relative aspect-video rounded-lg overflow-hidden">
-        <Image
-          className="object-cover"
+        <img
+          className="object-cover w-full h-full"
           src={cover_image ?? ""}
           alt={title}
-          fill
         />
       </div>
       <Title title={title} level={3} className="text-white leading-7">
@@ -66,7 +65,7 @@ const BlogCard = ({
           <div className="flex items-center gap-2">
             <Avatar
               src={user.avatar_url ?? ""}
-              alt={""}
+              alt={`Avatar of ${user.name}`}
               size="sm"
               className=""
             />

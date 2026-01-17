@@ -1,0 +1,11 @@
+node_modules
+.git
+.github
+.output
+.tanstack
+.opencode
+.spec-workflow
+*.md
+*.log
+.env*
+!.env.example

@@ -1,14 +1,14 @@
-"use client";
-import { usePathname, useRouter } from "next/navigation";
+import { useLocation, useRouter } from "@tanstack/react-router";
 import { GoArrowLeft } from "react-icons/go";
+
 import { ignoredPaths } from "../shared/PageTitle";
 
 const BackButton = () => {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
   const router = useRouter();
 
   const handleRouteBack = () => {
-    router.back();
+    router.history.back();
   };
 
   if (ignoredPaths.includes(pathname)) return null;
@@ -17,6 +17,7 @@ const BackButton = () => {
     <div className="container pt-16 md:pt-24">
       <button
         onClick={handleRouteBack}
+        aria-label="Go back to previous page"
         className="flex text-primary-button dark:text-white text-base  items-center gap-2"
       >
         <GoArrowLeft className="md:text-2xl" />

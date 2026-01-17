@@ -1,7 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.prose pre {
-  @apply px-0 bg-transparent;
-}
