@@ -25,7 +25,7 @@ export const Route = createFileRoute("/projects/")({
       { property: "og:url", content: `${SITE_URL}/projects` },
       {
         property: "og:image",
-        content: `${SITE_URL}/og-image.png`,
+        content: `${SITE_URL}/og/png?title=${encodeURIComponent("Projects")}&subtitle=${encodeURIComponent("Web applications, mobile apps, and open-source")}`,
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Projects - Sunday Ogbonna" },
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/projects/")({
       },
       {
         name: "twitter:image",
-        content: `${SITE_URL}/og-image.png`,
+        content: `${SITE_URL}/og/png?title=${encodeURIComponent("Projects")}&subtitle=${encodeURIComponent("Web applications, mobile apps, and open-source")}`,
       },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/projects` }],

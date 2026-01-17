@@ -36,8 +36,10 @@ export const Route = createFileRoute("/blog/$slug")({
       ? `${blog.title} | Sunday Ogbonna`
       : "Blog | Sunday Ogbonna";
     const description = blog?.description || "A blog post by Sunday Ogbonna";
-    // Use static OG image for now - dynamic OG images require Edge Function setup
-    const image = `${SITE_URL}/og-image.png`;
+    // Dynamic OG image with title and description
+    const image = blog
+      ? `${SITE_URL}/og/png?title=${encodeURIComponent(blog.title)}&subtitle=${encodeURIComponent(blog.description || "A blog post by Sunday Ogbonna")}`
+      : `${SITE_URL}/og/png?title=${encodeURIComponent("Blog")}&subtitle=${encodeURIComponent("Articles by Sunday Ogbonna")}`;
     const url = blog
       ? `${SITE_URL}/blog/${blog.slug}_${blog.id}`
       : `${SITE_URL}/blog`;

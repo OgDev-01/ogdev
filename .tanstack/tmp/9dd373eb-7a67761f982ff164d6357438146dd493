@@ -1,0 +1,378 @@
+import { createFileRoute } from "@tanstack/react-router";
+import satori from "satori";
+import { Resvg } from "@resvg/resvg-js";
+
+// Brand colors from globals.css
+const COLORS = {
+  background: "#0a0a0f",
+  primary: "#6342ba", // hsla(248, 62%, 44%)
+  secondary: "#7c5cd1", // hsla(248, 62%, 58%)
+  white: "#ffffff",
+  muted: "#9ca3af",
+  subtle: "#6b7280",
+};
+
+// Font cache to avoid fetching on every request
+let fontCache: ArrayBuffer | null = null;
+
+async function getInterFont(): Promise<ArrayBuffer> {
+  if (fontCache) {
+    return fontCache;
+  }
+
+  // Fetch Inter Bold (600 weight) from Google Fonts
+  const fontResponse = await fetch(
+    "https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2"
+  );
+  fontCache = await fontResponse.arrayBuffer();
+  return fontCache;
+}
+
+// Generate hexagon SVG path
+function createHexagonPath(cx: number, cy: number, size: number): string {
+  const points = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = (Math.PI / 3) * i - Math.PI / 6;
+    const x = cx + size * Math.cos(angle);
+    const y = cy + size * Math.sin(angle);
+    points.push(`${x},${y}`);
+  }
+  return `M${points.join("L")}Z`;
+}
+
+export const Route = createFileRoute("/og/png")({
+  server: {
+    handlers: {
+      GET: async ({ request }) => {
+        try {
+          const url = new URL(request.url);
+          const title = url.searchParams.get("title") || "Software Engineer";
+          const subtitle =
+            url.searchParams.get("subtitle") ||
+            "Building modern web experiences";
+
+          const fontData = await getInterFont();
+
+          // Create hexagon pattern paths for top-right corner
+          const hexagons: { cx: number; cy: number; size: number }[] = [];
+          const hexSize = 40;
+          const spacing = hexSize * 1.8;
+
+          // Generate hexagon grid for top-right area
+          for (let row = 0; row < 4; row++) {
+            for (let col = 0; col < 6; col++) {
+              const offsetX = row % 2 === 0 ? 0 : spacing / 2;
+              const cx = 900 + col * spacing + offsetX;
+              const cy = 60 + row * (hexSize * 1.5);
+              hexagons.push({ cx, cy, size: hexSize });
+            }
+          }
+
+          // Generate SVG with Satori
+          const svg = await satori(
+            {
+              type: "div",
+              props: {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: COLORS.background,
+                  position: "relative",
+                  overflow: "hidden",
+                },
+                children: [
+                  // Hexagon pattern overlay (top-right)
+                  {
+                    type: "svg",
+                    props: {
+                      width: "500",
+                      height: "300",
+                      viewBox: "0 0 500 300",
+                      style: {
+                        position: "absolute",
+                        top: "0",
+                        right: "0",
+                        opacity: 0.12,
+                      },
+                      children: hexagons.map((hex, i) => ({
+                        type: "path",
+                        key: i,
+                        props: {
+                          d: createHexagonPath(hex.cx - 850, hex.cy, hex.size),
+                          fill: "none",
+                          stroke: COLORS.secondary,
+                          strokeWidth: "1.5",
+                        },
+                      })),
+                    },
+                  },
+                  // Purple gradient glow at bottom
+                  {
+                    type: "div",
+                    props: {
+                      style: {
+                        position: "absolute",
+                        bottom: "0",
+                        left: "0",
+                        right: "0",
+                        height: "200px",
+                        background: `linear-gradient(to top, ${COLORS.primary}30, transparent)`,
+                      },
+                    },
+                  },
+                  // Main content container
+                  {
+                    type: "div",
+                    props: {
+                      style: {
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        height: "100%",
+                        padding: "60px",
+                      },
+                      children: [
+                        // Top section with icon
+                        {
+                          type: "div",
+                          props: {
+                            style: {
+                              display: "flex",
+                              alignItems: "center",
+                            },
+                            children: [
+                              // CPU/chip icon container
+                              {
+                                type: "div",
+                                props: {
+                                  style: {
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: "64px",
+                                    height: "64px",
+                                    borderRadius: "16px",
+                                    backgroundColor: `${COLORS.primary}20`,
+                                    border: `2px solid ${COLORS.primary}40`,
+                                  },
+                                  children: [
+                                    // Simple CPU icon using SVG
+                                    {
+                                      type: "svg",
+                                      props: {
+                                        width: "32",
+                                        height: "32",
+                                        viewBox: "0 0 24 24",
+                                        fill: "none",
+                                        children: [
+                                          {
+                                            type: "rect",
+                                            props: {
+                                              x: "6",
+                                              y: "6",
+                                              width: "12",
+                                              height: "12",
+                                              rx: "2",
+                                              stroke: COLORS.secondary,
+                                              strokeWidth: "2",
+                                            },
+                                          },
+                                          // Top pins
+                                          {
+                                            type: "path",
+                                            props: {
+                                              d: "M9 6V3M15 6V3M9 21V18M15 21V18M6 9H3M6 15H3M21 9H18M21 15H18",
+                                              stroke: COLORS.secondary,
+                                              strokeWidth: "2",
+                                              strokeLinecap: "round",
+                                            },
+                                          },
+                                          // Inner square
+                                          {
+                                            type: "rect",
+                                            props: {
+                                              x: "9",
+                                              y: "9",
+                                              width: "6",
+                                              height: "6",
+                                              rx: "1",
+                                              fill: COLORS.secondary,
+                                            },
+                                          },
+                                        ],
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        // Middle section with title and subtitle
+                        {
+                          type: "div",
+                          props: {
+                            style: {
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "16px",
+                              maxWidth: "900px",
+                            },
+                            children: [
+                              // Title
+                              {
+                                type: "div",
+                                props: {
+                                  style: {
+                                    fontSize: "56px",
+                                    fontWeight: "700",
+                                    color: COLORS.white,
+                                    lineHeight: "1.2",
+                                    letterSpacing: "-0.02em",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                  },
+                                  children: title,
+                                },
+                              },
+                              // Subtitle
+                              {
+                                type: "div",
+                                props: {
+                                  style: {
+                                    fontSize: "24px",
+                                    fontWeight: "400",
+                                    color: COLORS.muted,
+                                    lineHeight: "1.5",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                  },
+                                  children: subtitle,
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        // Bottom section with branding
+                        {
+                          type: "div",
+                          props: {
+                            style: {
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            },
+                            children: [
+                              // Author tag
+                              {
+                                type: "div",
+                                props: {
+                                  style: {
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "12px",
+                                  },
+                                  children: [
+                                    // Avatar placeholder (circle)
+                                    {
+                                      type: "div",
+                                      props: {
+                                        style: {
+                                          width: "40px",
+                                          height: "40px",
+                                          borderRadius: "50%",
+                                          backgroundColor: COLORS.primary,
+                                          display: "flex",
+                                          alignItems: "center",
+                                          justifyContent: "center",
+                                          color: COLORS.white,
+                                          fontSize: "18px",
+                                          fontWeight: "600",
+                                        },
+                                        children: "S",
+                                      },
+                                    },
+                                    // Author name
+                                    {
+                                      type: "div",
+                                      props: {
+                                        style: {
+                                          fontSize: "18px",
+                                          fontWeight: "500",
+                                          color: COLORS.white,
+                                        },
+                                        children: "Sunday Ogbonna",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              // Site URL
+                              {
+                                type: "div",
+                                props: {
+                                  style: {
+                                    fontSize: "18px",
+                                    fontWeight: "500",
+                                    color: COLORS.subtle,
+                                  },
+                                  children: "ogbonna.dev",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              width: 1200,
+              height: 630,
+              fonts: [
+                {
+                  name: "Inter",
+                  data: fontData,
+                  weight: 400,
+                  style: "normal",
+                },
+              ],
+            }
+          );
+
+          // Convert SVG to PNG
+          const resvg = new Resvg(svg, {
+            fitTo: {
+              mode: "width",
+              value: 1200,
+            },
+          });
+          const pngData = resvg.render();
+          const pngBuffer = pngData.asPng();
+
+          return new Response(pngBuffer, {
+            headers: {
+              "Content-Type": "image/png",
+              "Cache-Control":
+                "public, max-age=3600, stale-while-revalidate=86400",
+            },
+          });
+        } catch (error) {
+          console.error("OG Image generation error:", error);
+          return new Response("Error generating image", { status: 500 });
+        }
+      },
+    },
+  },
+});
