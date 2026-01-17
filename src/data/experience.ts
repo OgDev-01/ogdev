@@ -169,8 +169,8 @@ export const projects: Project[] = [
     description:
       "A family tree repository application allowing users to build, explore, and share their genealogy.",
     technologies: ["React", "Next.js", "TypeScript", "GraphQL"],
-    link: "#",
-    featured: false,
+    link: "https://mynativetree.com",
+    featured: true,
     year: "2023",
     madeAt: "Vessel Labs",
   },
