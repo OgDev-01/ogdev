@@ -45,6 +45,7 @@ export const Route = createRootRoute({
       { name: "twitter:title", content: SITE_TITLE },
       { name: "twitter:description", content: SITE_DESCRIPTION },
       { name: "twitter:image", content: SITE_IMAGE },
+      { name: "twitter:image:alt", content: SITE_TITLE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
