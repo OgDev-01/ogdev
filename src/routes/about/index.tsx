@@ -1,140 +1,145 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { FiArrowRight } from "react-icons/fi";
 
-import Text from "@/components/shared/Typography/Text";
-import Title from "@/components/shared/Typography/Title";
-
-import { Technologies } from "./-technologies";
-import { companies } from "./-companies";
+import FadeIn from "@/components/FadeIn/FadeIn";
 import ContactForm from "./-ContactForm";
 
+const SITE_URL = "https://www.ogbonna.dev";
+
 export const Route = createFileRoute("/about/")({
+  head: () => ({
+    meta: [
+      { title: "About - Sunday Ogbonna" },
+      {
+        name: "description",
+        content:
+          "Learn more about Sunday Ogbonna, a software engineer with 5+ years of experience building web and mobile applications.",
+      },
+      { property: "og:title", content: "About - Sunday Ogbonna" },
+      {
+        property: "og:description",
+        content:
+          "Learn more about Sunday Ogbonna, a software engineer with 5+ years of experience building web and mobile applications.",
+      },
+      { property: "og:url", content: `${SITE_URL}/about` },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
+  }),
   component: About,
 });
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Sunday Ogbonna",
+  jobTitle: "Software Engineer",
+  url: SITE_URL,
+  image: `${SITE_URL}/me.png`,
+  sameAs: [
+    "https://github.com/OgDev-01",
+    "https://www.linkedin.com/in/ogbonna-sunday-06a86116b",
+    "https://twitter.com/OgDev_01",
+  ],
+};
+
 function About() {
   return (
-    <div className="">
-      <div className="bg-black">
-        <section className="container py-6 dark:py-0 md:py-28 md:dark:py-16 text-white">
-          <div className="flex flex-col md:flex-row gap-10  md:gap-20 ">
-            <div className="flex-1 flex flex-col gap-8">
-              <Title className="text-white" level={2}>
-                Hi,
-              </Title>
-              <p className="text-xl md:text-2xl pr-10 break-words leading-8">
-                I'm Ogbonna Sunday,
-                <br /> a Software Engineer based in Nigeria. I enjoy creating
-                optimized and interactive web applications.
+    <div className="mx-auto max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24">
+      {/* Person Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      {/* Hero Section */}
+      <section className="mb-16 md:mb-24">
+        <div className="flex flex-col gap-10 md:flex-row md:gap-16 lg:gap-20">
+          {/* Content */}
+          <div className="flex flex-1 flex-col gap-6">
+            <FadeIn delay={0} direction="up">
+              <h1 className="text-4xl font-bold tracking-tight text-secondary-black dark:text-primary-white sm:text-5xl">
+                Hi, I'm Sunday
+              </h1>
+            </FadeIn>
+            <FadeIn delay={100} direction="up">
+              <p className="text-lg leading-relaxed text-secondary-black/80 dark:text-primary-white/80 md:text-xl">
+                I'm a Software Engineer based in Nigeria with 5+ years of
+                experience building web and mobile applications.
               </p>
-              <Text className="text-primary-white text-sm ">
-                I thrive on creating optimized and interactive web applications,
-                drawing from my experience as a former maintainer of an
-                open-source project. I approach every line of code as a chance
-                to evolve and enhance your digital experience.
-              </Text>
-              <div className="hidden md:flex items-center gap-10 mt-4">
+            </FadeIn>
+            <FadeIn delay={200} direction="up">
+              <p className="leading-relaxed text-secondary-black/70 dark:text-primary-white/70">
+                I thrive on creating optimized and interactive digital
+                experiences, drawing from my experience as a former maintainer
+                of an open-source project. I approach every line of code as a
+                chance to evolve and enhance your digital experience.
+              </p>
+            </FadeIn>
+            <FadeIn delay={300} direction="up">
+              <p className="leading-relaxed text-secondary-black/70 dark:text-primary-white/70">
+                When I'm not coding, you'll find me writing{" "}
+                <Link
+                  to="/blog"
+                  className="font-medium text-primary-button hover:underline dark:text-secondary-button"
+                >
+                  technical articles
+                </Link>
+                , contributing to open source, or exploring new technologies.
+              </p>
+            </FadeIn>
+
+            {/* CTAs */}
+            <FadeIn delay={400} direction="up">
+              <div className="mt-4 flex flex-wrap items-center gap-4">
                 <a
                   href="/OGBONNA-SUNDAY.pdf"
-                  className=" border-2 border-secondary-button text-white px-6 py-2 rounded-full  transition hover:bg-secondary-button hover:text-white"
-                  download="OGBONNA-SUNDAY.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center rounded-full border-2 border-primary-button px-6 py-2.5 font-medium text-primary-button transition hover:bg-primary-button hover:text-white dark:border-secondary-button dark:text-secondary-button dark:hover:bg-secondary-button dark:hover:text-white"
                 >
-                  Download CV
+                  View Resume
+                  <FiArrowRight
+                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </a>
                 <Link
                   to="/about"
                   hash="contact"
-                  className="bg-secondary-button px-6 py-2 rounded-full"
+                  className="inline-flex items-center rounded-full bg-primary-button px-6 py-2.5 font-medium text-white transition hover:bg-primary-button/90 dark:bg-secondary-button dark:hover:bg-secondary-button/90"
                 >
                   Contact Me
                 </Link>
               </div>
-            </div>
-            <div className="flex-1">
-              <img src="/me.png" alt="Ogbonna Sunday" className="w-full" />
-            </div>
-            <div className="flex md:hidden items-center gap-10 mt-4">
-              <a
-                href="/OGBONNA-SUNDAY.pdf"
-                className=" border-2 border-secondary-button text-white px-6 py-2 rounded-full  transition hover:bg-secondary-button hover:text-white"
-                download="OGBONNA-SUNDAY.pdf"
-              >
-                Download CV
-              </a>
-              <Link
-                to="/about"
-                hash="contact"
-                className="bg-secondary-button px-6 py-2 rounded-full"
-              >
-                Contact Me
-              </Link>
-            </div>
+            </FadeIn>
           </div>
-        </section>
-      </div>
-      <section className="py-20 container">
-        <Title
-          className="text-center text-xl break-words md:text-2xl"
-          level={5}
-        >
-          Technologies I've been working with recently
-        </Title>
-        <div className="flex items-center gap-2 md:gap-4 md:justify-center flex-wrap mt-10">
-          {Technologies.map((tech) => (
-            <div
-              className="flex items-center gap-2 border-2 dark:border-primary-white/40 rounded-full px-4 py-2 text-sm"
-              key={tech}
-            >
-              {tech}
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="container mt-10">
-        <Title
-          className="text-center text-xl break-words md:text-2xl"
-          level={5}
-        >
-          Work Experience
-        </Title>
-        <div className="rounded-xl px-4 py-10 bg-black mt-10 text-white flex flex-col  [&>*:nth-child(odd)]:bg-white/5">
-          {companies.map((company) => (
-            <div
-              className="flex items-center justify-between px-4 py-4 rounded-md"
-              key={company.name}
-            >
-              <div className="flex flex-col gap-1.5">
-                <Title className="text-white text-xl" level={4}>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white no-underline hover:underline transition"
-                    href={company.link}
-                  >
-                    {company.name}
-                  </a>
-                </Title>
-                <Text className="text-white/70 text-sm">{company.role}</Text>
-              </div>
-              <div className="px-4 py-2 rounded-full text-xs md:text-sm bg-primary-white/10 shrink-0">
-                {company.date}
-              </div>
-            </div>
-          ))}
+
+          {/* Image */}
+          <FadeIn delay={200} direction="right" className="flex-1">
+            <img
+              src="/me.png"
+              alt="Sunday Ogbonna"
+              className="w-full rounded-2xl"
+            />
+          </FadeIn>
         </div>
       </section>
 
-      <section id="contact" className="container mt-12">
-        <Title
-          className="text-center text-2xl break-words md:text-4xl"
-          level={5}
-        >
-          Get in touch
-        </Title>
-        <Text className="text-center text-base md:text-xl md:w-3/6 mx-auto mt-4">
-          Got a question or a proposal, or just want to say hello ?
-        </Text>
+      {/* Contact Section */}
+      <section id="contact" className="mx-auto max-w-2xl">
+        <FadeIn delay={100}>
+          <h2 className="text-center text-3xl font-bold tracking-tight text-secondary-black dark:text-primary-white md:text-4xl">
+            Get in touch
+          </h2>
+        </FadeIn>
+        <FadeIn delay={200}>
+          <p className="mx-auto mt-4 text-center text-secondary-black/70 dark:text-primary-white/70 md:text-lg">
+            Got a question or proposal, or just want to say hello?
+          </p>
+        </FadeIn>
 
-        <ContactForm />
+        <FadeIn delay={300}>
+          <ContactForm />
+        </FadeIn>
       </section>
     </div>
   );

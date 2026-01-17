@@ -1,100 +1,305 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { VscArrowRight } from "react-icons/vsc";
-import { BsArrowUpRightCircle } from "react-icons/bs";
+import { FiArrowRight } from "react-icons/fi";
 
-import HeroSection from "@/components/HeroSection/HeroSection";
-import Title from "@/components/shared/Typography/Title";
-import ProjectCard from "@/components/ProjectCard";
-import BlogCard from "@/components/BlogCard";
-import { truncateString } from "@/libs/utils";
-import { getAllProjects } from "@/data/projects";
+import SidebarHeader from "@/components/SidebarHeader/SidebarHeader";
+import SectionHeader from "@/components/SectionHeader/SectionHeader";
+import ExperienceCard from "@/components/ExperienceCard/ExperienceCard";
+import ProjectCardNew from "@/components/ProjectCardNew/ProjectCardNew";
+import BlogCardNew from "@/components/BlogCardNew/BlogCardNew";
+import SpotlightProvider from "@/components/SpotlightProvider/SpotlightProvider";
+import FadeIn from "@/components/FadeIn/FadeIn";
+import Newsletter from "@/components/Newsletter/Newsletter";
+import { experiences, projects } from "@/data/experience";
 import { getBlogs } from "@/server/blogs";
+
+const SITE_URL = "https://www.ogbonna.dev";
+
+// Person JSON-LD Schema
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Sunday Ogbonna",
+  jobTitle: "Software Engineer",
+  url: SITE_URL,
+  image: `${SITE_URL}/me.png`,
+  sameAs: [
+    "https://github.com/OgDev-01",
+    "https://www.linkedin.com/in/ogbonna-sunday-06a86116b",
+    "https://twitter.com/OgDev_01",
+  ],
+};
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const projects = getAllProjects().slice(0, 3);
-    const blogsResult = await getBlogs({ data: { limit: 3 } });
+    const blogsResult = await getBlogs({ data: { limit: 4 } });
     return {
-      projects,
       blogs: blogsResult.data ?? [],
     };
   },
+  head: () => ({
+    meta: [
+      { title: "Sunday Ogbonna - Software Engineer" },
+      {
+        name: "description",
+        content:
+          "Sunday Ogbonna is a software engineer who builds accessible, pixel-perfect digital experiences for the web and mobile.",
+      },
+      { property: "og:url", content: SITE_URL },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL }],
+  }),
   component: Home,
 });
 
 function Home() {
-  const { projects, blogs } = Route.useLoaderData();
+  const { blogs } = Route.useLoaderData();
 
   return (
-    <div className="w-full">
-      <HeroSection />
-      <section className="container mt-20">
-        <div className="flex justify-between items-center">
-          <Title level={3}>Projects</Title>
-          <Link className="flex items-center gap-2" to="/projects">
-            View more <VscArrowRight className="text-2xl" />
-          </Link>
-        </div>
-        <div className="flex flex-col mt-8 gap-6">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              id={project.id}
-              title={
-                project.title.length > 50
-                  ? truncateString(project.title, 50)
-                  : project.title
-              }
-              tags={project.tags}
-              slug={project.slug}
-              cover_image={project.cover_image}
-              content={project.content}
-              project_link={project.project_link}
-              start_date={project.start_date}
-              end_date={project.end_date}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="container mt-20 overflow-hidden">
-        <div className="flex justify-between items-center">
-          <Title level={3}>Blog post</Title>
-          <Link className="flex items-center gap-2" to="/blog">
-            View all posts <VscArrowRight className="text-2xl" />
-          </Link>
-        </div>
+    <SpotlightProvider>
+      {/* Person Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-16 lg:px-24 lg:py-0">
+        <div className="lg:flex lg:justify-between lg:gap-4">
+          {/* Sticky Sidebar - Left Column */}
+          <SidebarHeader />
 
-        <section className="flex gap-4 max-md:overflow-x-scroll md:justify-center mt-10 pr-5 md:pr-0">
-          {blogs.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              slug={blog.slug}
-              title={blog.title}
-              created_at={blog.published_at}
-              reading_time_minutes={blog.reading_time_minutes}
-              cover_image={blog.cover_image}
-              id={blog.id}
-              page_views_count={blog.page_views_count}
-              user={{
-                name: blog.user.name,
-                avatar_url: blog.user.profile_image,
-              }}
-            />
-          ))}
-        </section>
-      </section>
+          {/* Main Content - Right Column */}
+          <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+            {/* About Section */}
+            <section
+              id="about"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="About me"
+            >
+              <SectionHeader title="About" />
+              <FadeIn delay={100}>
+                <div className="space-y-4">
+                  <p className="text-secondary-black/80 dark:text-primary-white/80">
+                    Results-driven software developer with 5+ years of
+                    experience in frontend and mobile technologies. I specialize
+                    in building scalable applications, optimizing
+                    infrastructure, and improving deployment processes to
+                    accelerate feature delivery.
+                  </p>
+                  <p className="text-secondary-black/80 dark:text-primary-white/80">
+                    I've had the privilege of working at{" "}
+                    <a
+                      href="https://opensauced.pizza"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary-button hover:underline dark:text-secondary-button"
+                    >
+                      an open-source startup
+                    </a>
+                    , collaborating with senior engineers from companies like
+                    AWS, Netlify, and Ngx. Currently, I'm focused on building
+                    mobile experiences and leading engineering teams.
+                  </p>
+                  <p className="text-secondary-black/80 dark:text-primary-white/80">
+                    When I'm not coding, you'll find me writing{" "}
+                    <Link
+                      to="/blog"
+                      className="font-medium text-primary-button hover:underline dark:text-secondary-button"
+                    >
+                      technical articles
+                    </Link>
+                    , contributing to open source, or exploring new
+                    technologies.
+                  </p>
+                </div>
+              </FadeIn>
+            </section>
 
-      <div className="container mt-20">
-        <Title className="text-5xl md:text-8xl font-extrabold" level={4}>
-          Let's work <br /> together !!
-        </Title>
-        <a
-          href="mailto:sunday@ogbonna.dev"
-          className="text-2xl md:text-5xl flex text-primary-button font-semibold mt-10 items-center gap-6"
-        >
-          Sunday@ogbonna.dev <BsArrowUpRightCircle />
-        </a>
+            {/* Experience Section */}
+            <section
+              id="experience"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="Work experience"
+            >
+              <SectionHeader title="Experience" />
+              <FadeIn delay={150}>
+                <div>
+                  <ol className="group/list">
+                    {experiences.map((experience, index) => (
+                      <FadeIn
+                        key={experience.company}
+                        delay={200 + index * 100}
+                      >
+                        <ExperienceCard experience={experience} />
+                      </FadeIn>
+                    ))}
+                  </ol>
+                  <div className="mt-12">
+                    <a
+                      href="/OGBONNA-SUNDAY.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center font-medium text-secondary-black transition-colors hover:text-primary-button dark:text-primary-white dark:hover:text-secondary-button"
+                    >
+                      View Full Resume
+                      <FiArrowRight
+                        className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </FadeIn>
+            </section>
+
+            {/* Projects Section */}
+            <section
+              id="projects"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="Selected projects"
+            >
+              <SectionHeader title="Projects" />
+              <FadeIn delay={150}>
+                <div>
+                  <ol className="group/list">
+                    {projects
+                      .filter((p) => p.featured)
+                      .map((project, index) => (
+                        <FadeIn key={project.title} delay={200 + index * 100}>
+                          <ProjectCardNew project={project} />
+                        </FadeIn>
+                      ))}
+                  </ol>
+                  <div className="mt-12">
+                    <Link
+                      to="/projects"
+                      className="group inline-flex items-center font-medium text-secondary-black transition-colors hover:text-primary-button dark:text-primary-white dark:hover:text-secondary-button"
+                    >
+                      View Full Project Archive
+                      <FiArrowRight
+                        className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </FadeIn>
+            </section>
+
+            {/* Blog Section */}
+            <section
+              id="blog"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="Blog posts"
+            >
+              <SectionHeader title="Blog" />
+              <FadeIn delay={150}>
+                <div>
+                  <ol className="group/list">
+                    {blogs.map((blog, index) => (
+                      <FadeIn key={blog.id} delay={200 + index * 100}>
+                        <BlogCardNew
+                          id={blog.id}
+                          slug={blog.slug}
+                          title={blog.title}
+                          description={blog.description}
+                          cover_image={blog.cover_image}
+                          created_at={blog.published_at}
+                          reading_time_minutes={blog.reading_time_minutes}
+                        />
+                      </FadeIn>
+                    ))}
+                  </ol>
+                  <div className="mt-12">
+                    <Link
+                      to="/blog"
+                      className="group inline-flex items-center font-medium text-secondary-black transition-colors hover:text-primary-button dark:text-primary-white dark:hover:text-secondary-button"
+                    >
+                      View All Posts
+                      <FiArrowRight
+                        className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </FadeIn>
+            </section>
+
+            {/* Newsletter Section */}
+            <section
+              id="newsletter"
+              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+              aria-label="Newsletter signup"
+            >
+              <FadeIn delay={150}>
+                <Newsletter />
+              </FadeIn>
+            </section>
+
+            {/* Footer */}
+            <FadeIn delay={300}>
+              <footer className="max-w-md pb-16 text-sm text-secondary-black/50 dark:text-primary-white/50 sm:pb-0">
+                <p>
+                  Design inspired by{" "}
+                  <a
+                    href="https://brittanychiang.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    Brittany Chiang
+                  </a>
+                  . Coded in{" "}
+                  <a
+                    href="https://code.visualstudio.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    VS Code
+                  </a>{" "}
+                  by yours truly. Built with{" "}
+                  <a
+                    href="https://tanstack.com/start"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    TanStack Start
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://tailwindcss.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    Tailwind CSS
+                  </a>
+                  , deployed with{" "}
+                  <a
+                    href="https://coolify.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    Coolify
+                  </a>
+                  . All text is set in the{" "}
+                  <a
+                    href="https://rsms.me/inter/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-secondary-black/70 hover:text-primary-button dark:text-primary-white/70 dark:hover:text-secondary-button"
+                  >
+                    Inter
+                  </a>{" "}
+                  typeface.
+                </p>
+              </footer>
+            </FadeIn>
+          </main>
+        </div>
       </div>
-    </div>
+    </SpotlightProvider>
   );
 }
