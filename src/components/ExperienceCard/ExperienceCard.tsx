@@ -60,7 +60,7 @@ function ExperienceCard({ experience, className }: ExperienceCardProps) {
           >
             {experience.technologies.map((tech) => (
               <li key={tech}>
-                <div className="flex items-center rounded-full bg-primary-button/10 px-3 py-1 text-xs font-medium leading-5 text-primary-button dark:bg-secondary-button/10 dark:text-secondary-button">
+                <div className="flex items-center rounded-full bg-primary-button/10 px-3 py-1 text-xs font-medium leading-5 text-primary-button dark:bg-secondary-button/20 dark:text-primary-white/90">
                   {tech}
                 </div>
               </li>

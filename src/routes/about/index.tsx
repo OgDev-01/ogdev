@@ -132,8 +132,13 @@ function About() {
           <FadeIn delay={200} direction="right" className="flex-1">
             <img
               src="/me.png"
-              alt="Sunday Ogbonna"
+              alt="Sunday Ogbonna - Software Engineer"
               className="w-full rounded-2xl"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              width={600}
+              height={600}
             />
           </FadeIn>
         </div>

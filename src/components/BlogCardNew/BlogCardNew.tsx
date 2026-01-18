@@ -39,8 +39,12 @@ function BlogCardNew({
           <div className="z-10 hidden sm:order-1 sm:col-span-2 sm:block">
             <img
               src={cover_image}
-              alt={title}
+              alt={`Cover image for ${title}`}
               className="aspect-video w-full rounded border-2 border-secondary-black/10 object-cover transition-all duration-300 ease-out group-hover:border-secondary-black/30 dark:border-primary-white/10 dark:group-hover:border-primary-white/30"
+              loading="lazy"
+              decoding="async"
+              width={200}
+              height={112}
             />
           </div>
         )}

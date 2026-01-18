@@ -13,12 +13,24 @@ const Avatar = ({ src, alt, size, className }: AvatarProps) => {
     lg: "w-16 h-16",
   };
 
+  // Get pixel dimensions for width/height attributes
+  const dimensions = {
+    sm: 32,
+    md: 48,
+    lg: 64,
+  };
+  const dim = dimensions[size ?? "md"];
+
   return (
     <picture>
       <img
         src={src}
         alt={alt}
         className={cn("rounded-full", sizes[size ?? "md"], className)}
+        loading="lazy"
+        decoding="async"
+        width={dim}
+        height={dim}
       />
     </picture>
   );

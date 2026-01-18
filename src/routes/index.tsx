@@ -9,6 +9,7 @@ import BlogSection from "@/components/BlogSection/BlogSection";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import Newsletter from "@/components/Newsletter/Newsletter";
 import { experiences, projects } from "@/data/experience";
+import { getBlogs } from "@/server/blogs";
 
 const SITE_URL = "https://www.ogbonna.dev";
 
@@ -28,6 +29,10 @@ const personSchema = {
 };
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const result = await getBlogs({ data: { limit: 4 } });
+    return { blogs: result.data ?? [] };
+  },
   head: () => ({
     meta: [
       { title: "Sunday Ogbonna - Software Engineer" },
@@ -44,6 +49,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { blogs } = Route.useLoaderData();
+
   return (
     <>
       {/* Person Schema JSON-LD */}
@@ -57,7 +64,7 @@ function Home() {
           <SidebarHeader />
 
           {/* Main Content - Right Column */}
-          <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+          <main className="pt-24 lg:w-1/2 lg:py-24">
             {/* About Section */}
             <section
               id="about"
@@ -184,7 +191,7 @@ function Home() {
               <SectionHeader title="Blog" />
               <FadeIn delay={150}>
                 <div>
-                  <BlogSection />
+                  <BlogSection blogs={blogs} />
                   <div className="mt-12">
                     <Link
                       to="/blog"

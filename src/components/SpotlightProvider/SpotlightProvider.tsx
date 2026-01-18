@@ -6,6 +6,7 @@ interface SpotlightProviderProps {
 
 const CIRCLE_SIZE = 80;
 const CROSSHAIR_SIZE = 20;
+const IDLE_TIMEOUT_MS = 150; // Stop animation after 150ms of no movement
 
 function SpotlightProvider({ children }: SpotlightProviderProps) {
   const [mousePosition, setMousePosition] = useState({ x: -200, y: -200 });
@@ -13,47 +14,68 @@ function SpotlightProvider({ children }: SpotlightProviderProps) {
     x: -200,
     y: -200,
   });
-  const [targetPosition, setTargetPosition] = useState({ x: -200, y: -200 });
   const [isVisible, setIsVisible] = useState(false);
   const [isHoveringContent, setIsHoveringContent] = useState(false);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
+
   const rafRef = useRef<number | null>(null);
+  const isAnimatingRef = useRef(false);
+  const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const targetRef = useRef({ x: -200, y: -200 });
+
   const circleLerpFactor = 0.12;
   const crosshairLerpFactor = 0.4; // Crosshair follows faster
 
-  // Smooth lerp animation loop
-  useEffect(() => {
-    let animationId: number;
+  // Start the animation loop (only when cursor is moving)
+  const startAnimation = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
 
     const animate = () => {
+      if (!isAnimatingRef.current) return;
+
+      const target = targetRef.current;
+
       // Circle follows with more lag
       setMousePosition((prev) => ({
-        x: prev.x + (targetPosition.x - prev.x) * circleLerpFactor,
-        y: prev.y + (targetPosition.y - prev.y) * circleLerpFactor,
+        x: prev.x + (target.x - prev.x) * circleLerpFactor,
+        y: prev.y + (target.y - prev.y) * circleLerpFactor,
       }));
       // Crosshair follows more closely
       setCrosshairPosition((prev) => ({
-        x: prev.x + (targetPosition.x - prev.x) * crosshairLerpFactor,
-        y: prev.y + (targetPosition.y - prev.y) * crosshairLerpFactor,
+        x: prev.x + (target.x - prev.x) * crosshairLerpFactor,
+        y: prev.y + (target.y - prev.y) * crosshairLerpFactor,
       }));
-      animationId = requestAnimationFrame(animate);
+
+      rafRef.current = requestAnimationFrame(animate);
     };
 
-    animationId = requestAnimationFrame(animate);
+    rafRef.current = requestAnimationFrame(animate);
+  }, []);
 
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [targetPosition]);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
+  // Stop the animation loop when cursor is idle
+  const stopAnimation = useCallback(() => {
+    isAnimatingRef.current = false;
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     }
+  }, []);
 
-    rafRef.current = requestAnimationFrame(() => {
-      setTargetPosition({ x: e.clientX, y: e.clientY });
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      // Update target position ref (no state update needed for target)
+      targetRef.current = { x: e.clientX, y: e.clientY };
       setIsVisible(true);
+
+      // Start animation if not already running
+      startAnimation();
+
+      // Reset idle timeout
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current);
+      }
+      idleTimeoutRef.current = setTimeout(stopAnimation, IDLE_TIMEOUT_MS);
 
       const target = e.target as HTMLElement;
 
@@ -67,27 +89,30 @@ function SpotlightProvider({ children }: SpotlightProviderProps) {
           "p, h1, h2, h3, h4, h5, h6, a, button, li, span, img"
         ) !== null;
       setIsHoveringContent(isContent);
-    });
-  }, []);
+    },
+    [startAnimation, stopAnimation]
+  );
 
   const handleMouseLeave = useCallback(() => {
     setIsVisible(false);
     setIsHoveringContent(false);
     setIsHoveringLink(false);
-  }, []);
+    stopAnimation();
+  }, [stopAnimation]);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.body.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.body.removeEventListener("mouseleave", handleMouseLeave);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
+      stopAnimation();
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current);
       }
     };
-  }, [handleMouseMove, handleMouseLeave]);
+  }, [handleMouseMove, handleMouseLeave, stopAnimation]);
 
   return (
     <div className="relative">

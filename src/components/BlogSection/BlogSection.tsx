@@ -1,28 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-
 import BlogCardNew from "@/components/BlogCardNew/BlogCardNew";
 import FadeIn from "@/components/FadeIn/FadeIn";
-import { BlogSectionSkeleton } from "@/components/shared/Skeleton";
-import { getBlogs } from "@/server/blogs";
+
+import type { DevToBlog } from "@/server/blogs";
+
+interface BlogSectionProps {
+  blogs: DevToBlog[];
+}
 
 /**
- * Lazy-loaded blog section for the home page
- * Fetches blog data client-side using TanStack Query to avoid blocking initial page render
+ * Blog section for the home page
+ * Receives pre-fetched blog data from the route loader for optimal SSR performance
  */
-function BlogSection() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["blogs", "home", 4],
-    queryFn: async () => {
-      const result = await getBlogs({ data: { limit: 4 } });
-      return result.data ?? [];
-    },
-  });
-
-  if (isLoading) {
-    return <BlogSectionSkeleton />;
-  }
-
-  if (isError || !data || data.length === 0) {
+function BlogSection({ blogs }: BlogSectionProps) {
+  if (!blogs || blogs.length === 0) {
     return (
       <p className="text-secondary-black/60 dark:text-primary-white/60">
         No blog posts available.
@@ -32,7 +22,7 @@ function BlogSection() {
 
   return (
     <ol className="group/list">
-      {data.map((blog, index) => (
+      {blogs.map((blog, index) => (
         <FadeIn key={blog.id} delay={100 + index * 50}>
           <BlogCardNew
             id={blog.id}

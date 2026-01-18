@@ -61,7 +61,7 @@ function Newsletter() {
         </p>
 
         {status === "success" ? (
-          <div className="mt-4 flex items-center gap-2 rounded-full bg-primary-button/10 px-4 py-2.5 text-primary-button dark:bg-secondary-button/10 dark:text-secondary-button">
+          <div className="mt-4 flex items-center gap-2 rounded-full bg-primary-button/10 px-4 py-2.5 text-primary-button dark:bg-secondary-button/20 dark:text-primary-white/90">
             <FiCheck className="h-5 w-5" aria-hidden="true" />
             <span className="text-sm font-medium">{message}</span>
           </div>

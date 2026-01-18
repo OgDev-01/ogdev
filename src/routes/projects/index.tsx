@@ -122,7 +122,7 @@ function Projects() {
                   <ul className="flex flex-wrap gap-1.5">
                     {project.technologies.slice(0, 4).map((tech) => (
                       <li key={tech}>
-                        <span className="rounded-full bg-primary-button/10 px-2.5 py-1 text-xs font-medium text-primary-button dark:bg-secondary-button/10 dark:text-secondary-button">
+                        <span className="rounded-full bg-primary-button/10 px-2.5 py-1 text-xs font-medium text-primary-button dark:bg-secondary-button/20 dark:text-primary-white/90">
                           {tech}
                         </span>
                       </li>

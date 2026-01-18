@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useRouterState } from "@tanstack/react-router";
 
 import { cn } from "@/libs/utils";
 
@@ -21,12 +22,20 @@ function FadeIn({
   delay = 0,
   duration = 400,
 }: FadeInProps) {
+  const isNavigating = useRouterState({ select: (s) => s.isLoading });
   const [isVisible, setIsVisible] = useState(false);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
+    // Skip animation if already animated or if we're navigating away
+    if (hasAnimated.current) {
+      return;
+    }
+
     // Trigger animation on mount after a small delay to ensure paint
     const timer = requestAnimationFrame(() => {
       setIsVisible(true);
+      hasAnimated.current = true;
     });
 
     return () => cancelAnimationFrame(timer);
@@ -47,10 +56,17 @@ function FadeIn({
     }
   };
 
+  // During navigation, keep elements visible to prevent flash
+  // Once animated, always show without animation
+  const shouldShow = isVisible || hasAnimated.current || isNavigating;
+
   const styles: React.CSSProperties = {
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? "none" : getInitialTransform(),
-    transition: `opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
+    opacity: shouldShow ? 1 : 0,
+    transform: shouldShow ? "none" : getInitialTransform(),
+    transition:
+      hasAnimated.current || isNavigating
+        ? "none"
+        : `opacity ${duration}ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`,
   };
 
   return (

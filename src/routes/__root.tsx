@@ -11,6 +11,7 @@ import type { ReactNode } from "react";
 
 import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import SpotlightProvider from "@/components/SpotlightProvider/SpotlightProvider";
+import RouteProgress from "@/components/RouteProgress/RouteProgress";
 import { ThemeProvider } from "@/libs/context/theme";
 import appCss from "@/styles/globals.css?url";
 
@@ -61,6 +62,14 @@ export const Route = createRootRoute({
       { name: "twitter:image:alt", content: SITE_TITLE },
     ],
     links: [
+      // Preload critical fonts for faster LCP
+      {
+        rel: "preload",
+        href: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "stylesheet", href: appCss },
       // Favicon
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -80,6 +89,14 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&display=swap",
       },
+      // SEO: Sitemap and RSS feed
+      { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "Sunday Ogbonna - Blog RSS Feed",
+        href: `${SITE_URL}/rss.xml`,
+      },
     ],
   }),
   component: RootComponent,
@@ -93,6 +110,9 @@ function RootComponent() {
 
   const content = (
     <>
+      {/* Route transition progress indicator */}
+      <RouteProgress />
+
       {/* Skip to content link for accessibility */}
       <a
         href="#content"
