@@ -3,11 +3,13 @@ import { FiArrowLeft, FiArrowUpRight } from "react-icons/fi";
 import { FaGithub, FaApple, FaGooglePlay } from "react-icons/fa";
 
 import FadeIn from "@/components/FadeIn/FadeIn";
+import { ProjectsListSkeleton } from "@/components/shared/Skeleton";
 import { projects } from "@/data/experience";
 
 const SITE_URL = "https://www.ogbonna.dev";
 
 export const Route = createFileRoute("/projects/")({
+  pendingComponent: ProjectsListSkeleton,
   head: () => ({
     meta: [
       { title: "Projects - Sunday Ogbonna" },

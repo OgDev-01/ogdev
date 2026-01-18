@@ -3,6 +3,7 @@ import { FiArrowLeft, FiArrowUpRight, FiClock } from "react-icons/fi";
 import { format } from "date-fns";
 
 import FadeIn from "@/components/FadeIn/FadeIn";
+import { BlogListSkeleton } from "@/components/shared/Skeleton";
 import { getBlogs } from "@/server/blogs";
 
 const SITE_URL = "https://www.ogbonna.dev";
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/blog/")({
     const result = await getBlogs({ data: { limit: 20 } });
     return { blogs: result.data ?? [] };
   },
+  pendingComponent: BlogListSkeleton,
   head: () => ({
     meta: [
       { title: "Blog - Sunday Ogbonna" },

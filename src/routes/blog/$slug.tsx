@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Avatar from "@/components/Avatar";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import FadeIn from "@/components/FadeIn/FadeIn";
+import { BlogDetailSkeleton } from "@/components/shared/Skeleton";
 import { getBlogs, getBlogById } from "@/server/blogs";
 
 const SITE_URL = "https://www.ogbonna.dev";
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/blog/$slug")({
 
     return { blog, filteredBlogs };
   },
+  pendingComponent: BlogDetailSkeleton,
   head: ({ loaderData }) => {
     const blog = loaderData?.blog;
     const title = blog?.title

@@ -9,6 +9,7 @@ import BlogCardNew from "@/components/BlogCardNew/BlogCardNew";
 import SpotlightProvider from "@/components/SpotlightProvider/SpotlightProvider";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import Newsletter from "@/components/Newsletter/Newsletter";
+import { HomeSkeleton } from "@/components/shared/Skeleton";
 import { experiences, projects } from "@/data/experience";
 import { getBlogs } from "@/server/blogs";
 
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/")({
       blogs: blogsResult.data ?? [],
     };
   },
+  pendingComponent: HomeSkeleton,
   head: () => ({
     meta: [
       { title: "Sunday Ogbonna - Software Engineer" },
