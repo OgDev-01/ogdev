@@ -6,7 +6,6 @@ import SectionHeader from "@/components/SectionHeader/SectionHeader";
 import ExperienceCard from "@/components/ExperienceCard/ExperienceCard";
 import ProjectCardNew from "@/components/ProjectCardNew/ProjectCardNew";
 import BlogSection from "@/components/BlogSection/BlogSection";
-import SpotlightProvider from "@/components/SpotlightProvider/SpotlightProvider";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import Newsletter from "@/components/Newsletter/Newsletter";
 import { experiences, projects } from "@/data/experience";
@@ -46,7 +45,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <SpotlightProvider>
+    <>
       {/* Person Schema JSON-LD */}
       <script
         type="application/ld+json"
@@ -278,6 +277,6 @@ function Home() {
           </main>
         </div>
       </div>
-    </SpotlightProvider>
+    </>
   );
 }

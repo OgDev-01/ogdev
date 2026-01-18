@@ -337,3 +337,18 @@ img {
 .group:hover .group-hover\:bg-primary-white\/5 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Custom cursor - hide default cursor on desktop when custom cursor is active */
+@media (min-width: 976px) {
+  .cursor-none,
+  .cursor-none * {
+    cursor: none !important;
+  }
+
+  /* Keep pointer cursor on interactive elements */
+  .cursor-none a,
+  .cursor-none button,
+  .cursor-none [role="button"] {
+    cursor: pointer !important;
+  }
+}
