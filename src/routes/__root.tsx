@@ -5,11 +5,22 @@ import {
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
 import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import { ThemeProvider } from "@/libs/context/theme";
 import appCss from "@/styles/globals.css?url";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 60 * 60 * 1000, // 1 hour (formerly cacheTime)
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const SITE_URL = "https://www.ogbonna.dev";
 const SITE_NAME = "Sunday Ogbonna";
@@ -75,24 +86,26 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <ThemeProvider>
-        {/* Skip to content link for accessibility */}
-        <a
-          href="#content"
-          className="absolute left-0 top-0 block -translate-x-full rounded bg-primary-button px-4 py-3 text-sm font-bold uppercase tracking-widest text-white focus-visible:translate-x-0"
-        >
-          Skip to Content
-        </a>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          {/* Skip to content link for accessibility */}
+          <a
+            href="#content"
+            className="absolute left-0 top-0 block -translate-x-full rounded bg-primary-button px-4 py-3 text-sm font-bold uppercase tracking-widest text-white focus-visible:translate-x-0"
+          >
+            Skip to Content
+          </a>
 
-        {/* Floating theme toggle - visible on all pages */}
-        <div className="fixed right-6 top-6 z-50 md:right-8 md:top-8">
-          <ThemeToggle variant="floating" />
-        </div>
+          {/* Floating theme toggle - visible on all pages */}
+          <div className="fixed right-6 top-6 z-50 md:right-8 md:top-8">
+            <ThemeToggle variant="floating" />
+          </div>
 
-        <main id="content" className="min-h-screen">
-          <Outlet />
-        </main>
-      </ThemeProvider>
+          <main id="content" className="min-h-screen">
+            <Outlet />
+          </main>
+        </ThemeProvider>
+      </QueryClientProvider>
     </RootDocument>
   );
 }

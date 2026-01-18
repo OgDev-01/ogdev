@@ -5,13 +5,11 @@ import SidebarHeader from "@/components/SidebarHeader/SidebarHeader";
 import SectionHeader from "@/components/SectionHeader/SectionHeader";
 import ExperienceCard from "@/components/ExperienceCard/ExperienceCard";
 import ProjectCardNew from "@/components/ProjectCardNew/ProjectCardNew";
-import BlogCardNew from "@/components/BlogCardNew/BlogCardNew";
+import BlogSection from "@/components/BlogSection/BlogSection";
 import SpotlightProvider from "@/components/SpotlightProvider/SpotlightProvider";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import Newsletter from "@/components/Newsletter/Newsletter";
-import { HomeSkeleton } from "@/components/shared/Skeleton";
 import { experiences, projects } from "@/data/experience";
-import { getBlogs } from "@/server/blogs";
 
 const SITE_URL = "https://www.ogbonna.dev";
 
@@ -31,13 +29,6 @@ const personSchema = {
 };
 
 export const Route = createFileRoute("/")({
-  loader: async () => {
-    const blogsResult = await getBlogs({ data: { limit: 4 } });
-    return {
-      blogs: blogsResult.data ?? [],
-    };
-  },
-  pendingComponent: HomeSkeleton,
   head: () => ({
     meta: [
       { title: "Sunday Ogbonna - Software Engineer" },
@@ -54,8 +45,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { blogs } = Route.useLoaderData();
-
   return (
     <SpotlightProvider>
       {/* Person Schema JSON-LD */}
@@ -196,21 +185,7 @@ function Home() {
               <SectionHeader title="Blog" />
               <FadeIn delay={150}>
                 <div>
-                  <ol className="group/list">
-                    {blogs.map((blog, index) => (
-                      <FadeIn key={blog.id} delay={200 + index * 100}>
-                        <BlogCardNew
-                          id={blog.id}
-                          slug={blog.slug}
-                          title={blog.title}
-                          description={blog.description}
-                          cover_image={blog.cover_image}
-                          created_at={blog.published_at}
-                          reading_time_minutes={blog.reading_time_minutes}
-                        />
-                      </FadeIn>
-                    ))}
-                  </ol>
+                  <BlogSection />
                   <div className="mt-12">
                     <Link
                       to="/blog"
